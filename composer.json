@@ -1,0 +1,34 @@
+{
+    "name": "milos-pejanovic/mapper-php",
+    "description": "Model mapping, unmapping and validation",
+    "keywords": ["library", "php", "object", "mapper", "validator", "traits"],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Milos Pejanovic",
+            "email": "pejan123@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/milos-pejanovic/mapper-php/issues"
+    },
+    "require": {
+        "php": ">=7.0.1",
+        "devtech/common-php": "~2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    }
+}
