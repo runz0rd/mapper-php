@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a539991803643e03b421349fb7749daf",
-    "content-hash": "859d3c3dea058163e371b4f44c90cc8f",
+    "hash": "706d5b4739ef49e6dec629d9488f46d3",
+    "content-hash": "e9464edc65980f95b89d47f8f059a429",
     "packages": [
         {
-            "name": "devtech/common-php",
-            "version": "v2.2.1",
+            "name": "runz0rd/common-php",
+            "version": "v2.2.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/milos-pejanovic/common-php.git",
-                "reference": "73f38fc315e5d69cf7206ecfb0924e16c8346090"
+                "url": "https://github.com/runz0rd/common-php.git",
+                "reference": "0255bac01e7a7939728b5db1a8260ce17f4a5b7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milos-pejanovic/common-php/zipball/73f38fc315e5d69cf7206ecfb0924e16c8346090",
-                "reference": "73f38fc315e5d69cf7206ecfb0924e16c8346090",
+                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/0255bac01e7a7939728b5db1a8260ce17f4a5b7f",
+                "reference": "0255bac01e7a7939728b5db1a8260ce17f4a5b7f",
                 "shasum": ""
             },
             "require": {
@@ -33,7 +33,11 @@
                     "Common\\": "src/Common/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -47,14 +51,16 @@
             "description": "My collection of common libraries for php.",
             "keywords": [
                 "common",
+                "helpers",
                 "library",
-                "mapper",
-                "object",
                 "php",
-                "traits",
-                "validator"
+                "utilities"
             ],
-            "time": "2016-08-21 08:09:52"
+            "support": {
+                "issues": "https://github.com/milos-pejanovic/common-php/issues",
+                "source": "https://github.com/runz0rd/common-php/tree/v2.2.2"
+            },
+            "time": "2016-09-02 19:23:43"
         }
     ],
     "packages-dev": [

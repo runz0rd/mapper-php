@@ -10,6 +10,11 @@
 ## Requirements:
   * PHP 7.0.1+
 
+## Installation
+```
+composer require runz0rd/mapper-php
+```
+
 ## Annotations
 Heres a list of annotations we can use in models:
 

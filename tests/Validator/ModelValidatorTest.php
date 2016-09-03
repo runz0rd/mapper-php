@@ -25,7 +25,7 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
      * @param $requiredType
      * @dataProvider validModels
      */
-    public function testValidateWithRules($validModel, $requiredType) {
+    public function testValidate($validModel, $requiredType) {
         $this->modelValidator->validate($validModel, $requiredType);
     }
 
@@ -35,7 +35,7 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
      * @dataProvider invalidModels
      * @expectedException Exception
      */
-    public function testValidateWithRulesFail($invalidModel, $requiredType) {
+    public function testValidateFail($invalidModel, $requiredType) {
         $this->modelValidator->validate($invalidModel, $requiredType);
     }
 
