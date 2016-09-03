@@ -8,6 +8,7 @@
 
 namespace Traits;
 use Mapper\ModelMapper;
+use Mapper\XmlModelMapper;
 
 trait ConvertibleTrait {
 
@@ -31,8 +32,7 @@ trait ConvertibleTrait {
 	 * @throws \InvalidArgumentException
 	 */
 	public function toJson() {
-		$mapper = new ModelMapper();
-		$unmappedObject = $mapper->unmap($this);
+		$unmappedObject = $this->toObject();
 		$json = json_encode($unmappedObject);
 
 		if(!$json) {
@@ -41,4 +41,20 @@ trait ConvertibleTrait {
 
 		return $json;
 	}
+
+    /**
+     * @return \stdClass
+     */
+	public function toObject() {
+        $mapper = new ModelMapper();
+        return $mapper->unmap($this);
+    }
+
+    /**
+     * @return string
+     */
+    public function toXml() {
+        $mapper = new XmlModelMapper();
+        return $mapper->unmap($this);
+    }
 }

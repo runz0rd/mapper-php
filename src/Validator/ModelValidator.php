@@ -30,7 +30,7 @@ class ModelValidator {
 			throw new \InvalidArgumentException('Invalid object supplied for validation.');
 		}
 
-		$this->useRules(__DIR__ . '\Rules');
+		$this->loadRules(__DIR__ . '\Rules');
 
 		$modelClass = new ModelClass($object);
 		foreach($modelClass->getProperties() as $property) {
@@ -42,7 +42,7 @@ class ModelValidator {
      * Load all the rule classes from the specified folder
      * @param string $location
      */
-	public function useRules(string $location = __DIR__ . '\Rules') {
+	public function loadRules(string $location = __DIR__ . '\Rules') {
 		$files = glob($location . '\*.php');
         foreach($files as $file) {
             @require_once $file;

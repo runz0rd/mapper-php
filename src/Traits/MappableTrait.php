@@ -10,6 +10,7 @@ namespace Traits;
 use Mapper\ModelMapperException;
 use Mapper\ModelMapper;
 use Common\Util\Validation;
+use Mapper\XmlModelMapper;
 
 trait MappableTrait {
 
@@ -47,10 +48,17 @@ trait MappableTrait {
 
 	/**
 	 * @param $object
-	 * @throws ModelMapperException
 	 */
 	public function mapFromObject($object) {
 		$mapper = new ModelMapper();
 		$mapper->map($object, $this);
 	}
+
+    /**
+     * @param string $xml
+     */
+    public function mapFromXml(string $xml) {
+        $mapper = new XmlModelMapper();
+        $mapper->map($xml, $this);
+    }
 }

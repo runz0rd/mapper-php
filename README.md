@@ -22,8 +22,8 @@ Heres a list of annotations we can use in models:
 | :----------- | :---------- | :----------------------- |
 | @root        |  class      | Used to name the root of the element (XML) |
 | @var         |  property   | Used to declare the type of the property (validation). This is an alias for @rule annotation. See below for a list of pre-defined types (rules) for model validation |
-| @name        |  property   | Used to change the property name, if neccessary (can be used with special characters, but be careful if youre working with XML) |
-| @required    |  property   | Used to declare that a property is requried for a specific action (validation). Use without the action to make the property always required |
+| @name        |  property   | Used to change the property name, if necessary (can be used with special characters, but be careful if youre working with XML) |
+| @required    |  property   | Used to declare that a property is required for a specific action (validation). Use without the action to make the property always required |
 | @attribute   |  property   | Used to declare that a property is an attribute for the element (XML) |
 | @rule        |  property   | Used to enforce specific rules and filters on the property value (validation). You can use the predefined rules or create and import your own |
 
@@ -80,7 +80,7 @@ $myObject = $mapper->unmap($myModel);
 ```
 
 ### Validation
-Validation will check your mapped model's property types, custom rules, and whether the property is requried or not.
+Validation will check your mapped model's property types, custom rules, and whether the property is required or not.
 
 Validate your mapped models with ValidatableTrait, by providing it with the desired validation action:
 
@@ -90,6 +90,12 @@ $model->validate('createAction');
 Or if you want to validate only the properties that are always required:
 ```PHP
 $model->validate();
+```
+You can also use the validator itself:
+```PHP
+$model = new Model();
+$validator = new ModelValidator();
+$validator->validate($model, 'myAction');
 ```
 
 ### Rules
@@ -135,9 +141,20 @@ class LimitRule implements IRule {
 In the example above, we can configure a new rule, by:
  * Defining an array of names (aliases) which serve as the name of the rule in the annotation (getNames)
  * Providing a validation definition and throwing an exception if it doesnt pass (validate)
- * The rule paramters (0,99) come in through the $params array, in order in which they were provided
+ * The rule parameters (0,99) come in through the $params array, in order in which they were provided
 
-For more information please take a look at the predefinied rule classes and the IRule interface.
+For more information please take a look at the pre-defined rule classes and the IRule interface.
+
+### Loading your rules 
+```PHP
+$model = new Model();
+$myCustomRule = new MyCustomRule();
+$validator = new ModelValidator();
+$validator->useRule($myCustomRule);
+$validator->loadRules('/path/to/rules/');
+$validator->validate($model, 'myAction');
+```
+In the example above we can use custom rules by providing them to the validator one by one (useRule) or providing a path to a directory containing rules (loadRules).
 
 ## Code examples
 Please see the tests and models used in it.
