@@ -8,7 +8,7 @@
 
 namespace Validator;
 
-use Common\Models\ModelProperty;
+use Common\ModelReflection\ModelProperty;
 
 interface IRule {
 

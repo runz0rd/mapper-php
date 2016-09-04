@@ -15,6 +15,65 @@
 composer require runz0rd/mapper-php
 ```
 
+## How it works
+The mapper goes trough all the property names (with @name you could change property name mappings) of your model and maps the ones with the same name from the source (json/xml/array/stdClass), if available.
+The mapped model can be used as is, but it is recommended you validate it after mapping. 
+Required properties (@required) must always be set and of the appropriate type (if set with @var or @rule).
+Not required properties may not be set (null), but if set, must match defined types or rules (if set with @var or @rule) to pass validation.
+So, if you have:
+```json
+{
+  "name": "Jack",
+  "type": "human",
+  "age": 35,
+  "isEmployed": true,
+  "custom-desc": "lazy"
+}
+```
+You could make a model like this:
+```PHP
+class SomeGuy {
+
+    /**
+     * @required
+     * @var string
+     */
+    public $name;    
+
+    /**
+     * @required createSomeGuy
+     * @var string
+     */
+    public $type;    
+
+    /**
+     * @rule limit(1,150)
+     * @var integer
+     */
+    public $age;    
+
+    /**
+     * @var boolean
+     */
+    public $isEmployed;    
+    
+    /**
+     * @name custom-desc
+     * @var string
+     */
+    public $description
+}
+```
+Validation would **fail** if:
+ * You use **createSomeGuy** action, without (null) **$type** (required only on createSomeGuy action)
+ * Without (null) **$name** (always required)
+ * You use **createSomething** action, and **$type** is not a string
+ * **$name** is not a string
+ * **$age** is set (not null), but not an integer, or between 1 and 150 (rule)
+ * **$isEmployed** is set (not null) but not a boolean
+
+Note that **$description** would get mapped because it has the @name annotation set, and there is a property in the source matching that name (custom-desc).
+
 ## Annotations
 Heres a list of annotations we can use in models:
 
@@ -22,7 +81,7 @@ Heres a list of annotations we can use in models:
 | :----------- | :---------- | :----------------------- |
 | @root        |  class      | Used to name the root of the element (XML) |
 | @var         |  property   | Used to declare the type of the property (validation). This is an alias for @rule annotation. See below for a list of pre-defined types (rules) for model validation |
-| @name        |  property   | Used to change the property name, if necessary (can be used with special characters, but be careful if youre working with XML) |
+| @name        |  property   | Used to change the property name, while mapping and unmapping (can be used with special characters, but be careful if youre working with XML) |
 | @required    |  property   | Used to declare that a property is required for a specific action (validation). Use without the action to make the property always required |
 | @attribute   |  property   | Used to declare that a property is an attribute for the element (XML) |
 | @rule        |  property   | Used to enforce specific rules and filters on the property value (validation). You can use the predefined rules or create and import your own |
@@ -31,6 +90,7 @@ Heres a list of annotations we can use in models:
 
 | type      |  description              |
 | :-------- | :------------------------ |
+| any       | anything              |
 | string    | string type               |
 | integer   | integer type              |
 | boolean   | boolean type              |
@@ -121,7 +181,7 @@ If setup properly this custom rule would check if the property value is between 
 ### Rule setup
 Lets use the limit rule example from above, to create a new custom rule:
 ```PHP
-use Common\Models\ModelProperty;
+use Common\ModelReflection\ModelProperty;
 use Validator\IRule;
 use Validator\ModelValidatorException;
 

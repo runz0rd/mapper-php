@@ -7,12 +7,16 @@
  */
 
 namespace Mapper;
-use Common\Models\ModelClass;
-use Common\Models\ModelPropertyType;
+use Common\ModelReflection\Enum\AnnotationEnum;
+use Common\ModelReflection\Enum\TypeEnum;
+use Common\ModelReflection\ModelClass;
+use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Validation;
 use Common\Util\Iteration;
 
 class ModelMapper implements IModelMapper {
+
+    const ATTR_KEY = '@attributes';
 
 	/**
 	 * @param object $source
@@ -30,7 +34,7 @@ class ModelMapper implements IModelMapper {
 		$modelClass = new ModelClass($model);
 
 		foreach($modelClass->getProperties() as $property) {
-		    if($property->getDocBlock()->hasAnnotation('attribute')) {
+		    if($property->getDocBlock()->hasAnnotation(AnnotationEnum::ATTRIBUTE)) {
                 $mappedValue = $this->mapAttributeByName($property->getName(), $source);
             }
             else {
@@ -46,7 +50,7 @@ class ModelMapper implements IModelMapper {
 
     protected function mapAttributeByName(string $attributeName, $source) {
         $mappedAttributeValue = null;
-        $attributesKey = '@attributes';
+        $attributesKey = self::ATTR_KEY;
         if(isset($source->$attributesKey) && isset($source->$attributesKey[$attributeName])) {
             $mappedAttributeValue = $source->$attributesKey[$attributeName];
         }
@@ -62,10 +66,10 @@ class ModelMapper implements IModelMapper {
 	protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
         $mappedPropertyValue = Iteration::typeFilter($value);
 		if($propertyType->isModel()) {
-			if($propertyType->getActualType() == 'array' && is_array($value)) {
+			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
 				$mappedPropertyValue = $this->mapModelArray($propertyType->getModelClassName(), $value);
 			}
-			elseif($propertyType->getActualType() == 'object' && is_object($value)) {
+			elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
 				$mappedPropertyValue = $this->mapModel($propertyType->getModelClassName(), $value);
 			}
 		}
@@ -120,8 +124,8 @@ class ModelMapper implements IModelMapper {
 			if (Validation::isEmpty($propertyValue)) {
 				continue;
 			}
-			if($property->getDocBlock()->hasAnnotation('attribute')) {
-				$attributeKey = '@attributes';
+			if($property->getDocBlock()->hasAnnotation(AnnotationEnum::ATTRIBUTE)) {
+				$attributeKey = self::ATTR_KEY;
 				$unmappedObject->$attributeKey = new \stdClass();
 				$unmappedObject->$attributeKey->$propertyKey = $propertyValue;
 			}
@@ -142,11 +146,11 @@ class ModelMapper implements IModelMapper {
 		$unmappedPropertyValue = $value;
 
 		if($propertyType->isModel()) {
-			if($propertyType->getActualType() == 'array' && is_array($value)) {
+			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
 				$unmappedPropertyValue = $this->unmapModelArray($value);
 			}
 
-			elseif($propertyType->getActualType() == 'object' && is_object($value)) {
+			elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
 				$unmappedPropertyValue = $this->unmapModel($value);
 			}
 		}

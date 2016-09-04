@@ -7,8 +7,9 @@
  */
 
 namespace Validator;
-use Common\Models\ModelClass;
-use Common\Models\ModelProperty;
+use Common\ModelReflection\Enum\AnnotationEnum;
+use Common\ModelReflection\ModelClass;
+use Common\ModelReflection\ModelProperty;
 use Common\Util\Iteration;
 use Common\Util\Validation;
 
@@ -42,7 +43,7 @@ class ModelValidator {
      * Load all the rule classes from the specified folder
      * @param string $location
      */
-	public function loadRules(string $location = __DIR__ . '\Rules') {
+	public function loadRules(string $location) {
 		$files = glob($location . '\*.php');
         foreach($files as $file) {
             @require_once $file;
@@ -74,8 +75,8 @@ class ModelValidator {
      * @throws ModelValidatorException
      */
     protected function validateRules(ModelProperty $property) {
-        if(!is_null($property->getPropertyValue()) && $property->getDocBlock()->hasAnnotation('rule')) {
-            $definedRules = $property->getDocBlock()->getAnnotation('rule');
+        if(!is_null($property->getPropertyValue()) && $property->getDocBlock()->hasAnnotation(AnnotationEnum::RULE)) {
+            $definedRules = $property->getDocBlock()->getAnnotation(AnnotationEnum::RULE);
             foreach($definedRules as $definedRule) {
 	            $ruleName = strtolower($definedRule);
 	            $params = [];
@@ -88,7 +89,13 @@ class ModelValidator {
         }
     }
 
-	protected function validateRule(ModelProperty $property, $ruleName, array $params = []) {
+    /**
+     * @param ModelProperty $property
+     * @param string $ruleName
+     * @param array $params
+     * @throws ModelValidatorException
+     */
+	protected function validateRule(ModelProperty $property, string $ruleName, array $params = []) {
 		if(isset($this->rules[$ruleName])) {
 			$rule = $this->rules[$ruleName];
 			try {
@@ -106,7 +113,7 @@ class ModelValidator {
 	 * @param string $requiredType
 	 */
 	protected function validateProperty(ModelProperty $property, string $requiredType) {
-		if($property->getDocBlock()->hasAnnotation('var') && !is_null($property->getPropertyValue())) {
+		if($property->getDocBlock()->hasAnnotation(AnnotationEnum::VAR) && !is_null($property->getPropertyValue())) {
 			$this->validateRule($property, $property->getType()->getActualType());
 		}
 		$this->validateRule($property, 'required', [$requiredType]);

@@ -14,15 +14,9 @@
     "support": {
         "issues": "https://github.com/runz0rd/mapper-php/issues"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/runz0rd/common-php"
-        }
-    ],
     "require": {
         "php": ">=7.0.1",
-        "runz0rd/common-php": "~2"
+        "runz0rd/common-php": "2.2.3"
     },
     "require-dev": {
         "phpunit/phpunit": "~5"

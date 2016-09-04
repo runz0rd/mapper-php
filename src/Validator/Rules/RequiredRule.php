@@ -7,7 +7,7 @@
  */
 
 namespace Validator\Rules;
-use Common\Models\ModelProperty;
+use Common\ModelReflection\ModelProperty;
 use Common\Util\Validation;
 use Validator\IRule;
 use Validator\ModelValidatorException;

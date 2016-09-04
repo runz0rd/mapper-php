@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "706d5b4739ef49e6dec629d9488f46d3",
-    "content-hash": "e9464edc65980f95b89d47f8f059a429",
+    "hash": "f783561faf190dd5b4e4147b886e5111",
+    "content-hash": "da01a794943242ad42e9cbbb77c02023",
     "packages": [
         {
             "name": "runz0rd/common-php",
-            "version": "v2.2.2",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/runz0rd/common-php.git",
-                "reference": "0255bac01e7a7939728b5db1a8260ce17f4a5b7f"
+                "reference": "a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/0255bac01e7a7939728b5db1a8260ce17f4a5b7f",
-                "reference": "0255bac01e7a7939728b5db1a8260ce17f4a5b7f",
+                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8",
+                "reference": "a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8",
                 "shasum": ""
             },
             "require": {
@@ -33,11 +33,7 @@
                     "Common\\": "src/Common/"
                 }
             },
-            "autoload-dev": {
-                "classmap": [
-                    "tests/"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -56,11 +52,7 @@
                 "php",
                 "utilities"
             ],
-            "support": {
-                "issues": "https://github.com/milos-pejanovic/common-php/issues",
-                "source": "https://github.com/runz0rd/common-php/tree/v2.2.2"
-            },
-            "time": "2016-09-02 19:23:43"
+            "time": "2016-09-04 09:03:52"
         }
     ],
     "packages-dev": [
@@ -1264,16 +1256,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac"
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/1819adf2066880c7967df7180f4f662b6f0567ac",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/f291ed25eb1435bddbe8a96caaef16469c2a092d",
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d",
                 "shasum": ""
             },
             "require": {
@@ -1309,7 +1301,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-17 14:02:08"
+            "time": "2016-09-02 02:12:52"
         },
         {
             "name": "webmozart/assert",

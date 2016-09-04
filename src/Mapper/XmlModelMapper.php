@@ -11,21 +11,7 @@ use Common\Util\Iteration;
 use Common\Util\Validation;
 use Common\Util\Xml;
 
-class XmlModelMapper implements IModelMapper {
-
-    const ATTRIBUTES_KEY = '@attributes';
-
-    /**
-     * @var IModelMapper
-     */
-    public $modelMapper;
-
-    /**
-     * XmlModelMapper constructor.
-     */
-    public function __construct() {
-        $this->modelMapper = new ModelMapper();
-    }
+class XmlModelMapper extends ModelMapper implements IModelMapper {
 
     /**
      * @param mixed $source
@@ -37,7 +23,7 @@ class XmlModelMapper implements IModelMapper {
         $domDocument->loadXML($source);
         $domElement = $domDocument->documentElement;
         $object = $this->domNodeToObject($domElement);
-        $model = $this->modelMapper->map($object, $model);
+        $model = parent::map($object, $model);
 
         return $model;
     }
@@ -47,8 +33,8 @@ class XmlModelMapper implements IModelMapper {
      * @return string
      */
     public function unmap($model) {
-        $object = $this->modelMapper->unmap($model);
-        $rootName = $this->modelMapper->getModelRootName($model);
+        $object = parent::unmap($model);
+        $rootName = parent::getModelRootName($model);
         $xml = $this->objectToXml($object, $rootName);
 
         return $xml;
@@ -78,7 +64,7 @@ class XmlModelMapper implements IModelMapper {
      * @return \stdClass
      */
     protected function mapAttributes(\DOMNode $domElement, $object) {
-        $attributesKey = self::ATTRIBUTES_KEY;
+        $attributesKey = parent::ATTR_KEY;
         for($i = 0; $i < $domElement->attributes->length; $i++) {
             $key = $domElement->attributes->item($i)->nodeName;
             $value = $domElement->attributes->item($i)->nodeValue;
@@ -137,7 +123,7 @@ class XmlModelMapper implements IModelMapper {
         /** @var \DOMElement $element->parentNode */
         $key = $element->parentNode->tagName;
         $value = Iteration::typeFilter($element->nodeValue);
-        $attributesKey = $attributesKey = self::ATTRIBUTES_KEY;
+        $attributesKey = $attributesKey = parent::ATTR_KEY;
 
         $result = $value;
         if(isset($object->$attributesKey)) {
@@ -197,7 +183,7 @@ class XmlModelMapper implements IModelMapper {
      * @param \DOMElement $domElement
      */
     protected function addDomElementAttributes($source, \DOMElement $domElement) {
-        $attributesKey = self::ATTRIBUTES_KEY;
+        $attributesKey = parent::ATTR_KEY;
         if(isset($source->$attributesKey) && !Validation::isEmpty($source->$attributesKey)){
             foreach($source->$attributesKey as $attrKey => $attrValue) {
                 $domElement->setAttribute($attrKey, $attrValue);
