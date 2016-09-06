@@ -7,6 +7,8 @@
  */
 
 namespace Mapper;
+use Common\ModelReflection\Enum\TypeEnum;
+use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Iteration;
 use Common\Util\Validation;
 use Common\Util\Xml;
@@ -255,5 +257,25 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $node = $domDocument->importNode($domDoc->documentElement, true);
 
         return $node;
+    }
+
+    /**
+     * @override
+     * @param ModelPropertyType $propertyType
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
+        $mappedPropertyValue = Iteration::typeFilter($value);
+        if($propertyType->isModel()) {
+            if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
+                $mappedPropertyValue = $this->mapModelArray($propertyType->getModelClassName(), $value);
+            }
+            elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
+                $mappedPropertyValue = $this->mapModel($propertyType->getModelClassName(), $value);
+            }
+        }
+
+        return $mappedPropertyValue;
     }
 }

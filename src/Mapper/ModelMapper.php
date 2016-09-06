@@ -64,7 +64,7 @@ class ModelMapper implements IModelMapper {
 	 * @return mixed
 	 */
 	protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
-        $mappedPropertyValue = Iteration::typeFilter($value);
+        $mappedPropertyValue = $value;
 		if($propertyType->isModel()) {
 			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
 				$mappedPropertyValue = $this->mapModelArray($propertyType->getModelClassName(), $value);
