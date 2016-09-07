@@ -126,7 +126,7 @@ class TestModel {
 
     /**
      * @rule string
-     * @rule email
+     * @rule IP
      */
     public $multipleRules;
 }

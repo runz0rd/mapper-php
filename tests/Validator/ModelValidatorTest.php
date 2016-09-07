@@ -64,7 +64,7 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $model->model = $nestedModel;
         $model->modelArray = [$nestedModel,$nestedModel];
         $model->emailRule = 'test@test.com';
-        $model->multipleRules = 'test@test.com';
+        $model->multipleRules = '192.168.0.1';
 
         return [
             [$model, 'requiredString'],
@@ -102,13 +102,13 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $model->multipleRules = 'test@test.com';
 
         $invalidModel1 = clone $model;
-        $invalidModel1->boolTrue = '234';
+        $invalidModel1->boolTrue = 'false';
 
         $invalidModel2 = clone $model;
         $invalidModel2->string = 5;
 
         $invalidModel3 = clone $model;
-        $invalidModel3->integer = '3as';
+        $invalidModel3->integer = '123';
 
         $invalidModel4 = clone $model;
         $invalidModel4->array = true;
@@ -147,7 +147,7 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $invalidModel15->multipleRequiredInteger = null;
 
         $invalidModel16 = clone $model;
-        $invalidModel16->multipleRequiredInteger = 'asd';
+        $invalidModel16->multipleRequiredInteger = '3';
 
         $invalidModel17 = clone $model;
         $invalidModel17->emailRule = 'invalidEmail';

@@ -90,10 +90,12 @@ Heres a list of annotations we can use in models:
 
 | type      |  description              |
 | :-------- | :------------------------ |
-| any       | anything              |
+| any       | anything                  |
 | string    | string type               |
 | integer   | integer type              |
 | boolean   | boolean type              |
+| double    | double type               |
+| float     | float type                |
 | array     | array type                |
 | []        | array type                |
 | object    | stdClass for example      |
