@@ -96,16 +96,17 @@ class ModelValidator {
      * @throws ModelValidatorException
      */
 	protected function validateRule(ModelProperty $property, string $ruleName, array $params = []) {
-		if(isset($this->rules[$ruleName])) {
-			$rule = $this->rules[$ruleName];
-			try {
-				$rule->validate($property, $params);
-			}
-			catch(\Exception $ex) {
-				$message = 'Error while validating ' . $property->getParentClassName() . '::' . $property->getPropertyName() . '. ' . $ex->getMessage();
-				throw new ModelValidatorException($message);
-			}
-		}
+		if(!isset($this->rules[$ruleName])) {
+            throw new ModelValidatorException('No rule named "' . $ruleName . '" defined.');
+        }
+        $rule = $this->rules[$ruleName];
+        try {
+            $rule->validate($property, $params);
+        }
+        catch(\Exception $ex) {
+            $message = 'Error while validating ' . $property->getParentClassName() . '::' . $property->getPropertyName() . '. ' . $ex->getMessage();
+            throw new ModelValidatorException($message);
+        }
 	}
 
 	/**
