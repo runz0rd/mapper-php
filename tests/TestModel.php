@@ -114,7 +114,7 @@ class TestModel {
     public $multipleRequiredInteger;
 
     /**
-     * @attribute
+     * @xmlAttribute
      * @var string
      */
     public $attribute1;
@@ -129,4 +129,9 @@ class TestModel {
      * @rule IP
      */
     public $multipleRules;
+
+    /**
+     * @var XmlTestModel
+     */
+    public $xml;
 }

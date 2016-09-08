@@ -134,4 +134,5 @@
     <requiredString>requiredString</requiredString>
     <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
     <multipleRequiredInteger>5</multipleRequiredInteger>
+    <xml attributeTest="attribute">nodeValue</xml>
 </testModel>

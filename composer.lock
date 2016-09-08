@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f783561faf190dd5b4e4147b886e5111",
-    "content-hash": "da01a794943242ad42e9cbbb77c02023",
+    "hash": "83561bc15c1feb56a56d6209d2799a17",
+    "content-hash": "b3b5f0231d96d6309ecd7858c399fd3e",
     "packages": [
         {
             "name": "runz0rd/common-php",
-            "version": "v2.2.3",
+            "version": "v2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/runz0rd/common-php.git",
-                "reference": "a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8"
+                "reference": "1e6975868d465552e2612733d5819712af138881"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8",
-                "reference": "a270632dad797c6fdb5af1f95ca7c1d1bb2d6fa8",
+                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/1e6975868d465552e2612733d5819712af138881",
+                "reference": "1e6975868d465552e2612733d5819712af138881",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "php",
                 "utilities"
             ],
-            "time": "2016-09-04 09:03:52"
+            "time": "2016-09-08 21:01:40"
         }
     ],
     "packages-dev": [
@@ -112,16 +112,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "a8773992b362b58498eed24bf85005f363c34771"
+                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/a8773992b362b58498eed24bf85005f363c34771",
-                "reference": "a8773992b362b58498eed24bf85005f363c34771",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/da8529775f14f4fdae33f916eb0cf65f6afbddbc",
+                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +150,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2015-11-20 12:04:31"
+            "time": "2016-09-06 16:07:05"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -684,16 +684,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.2.6",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49"
+                "reference": "546898a2c0c356ef2891b39dd7d07f5d82c8ed0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49",
-                "reference": "46b249b43fd2ed8e127aa0fdb3cbcf56e9bc0e49",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/546898a2c0c356ef2891b39dd7d07f5d82c8ed0a",
+                "reference": "546898a2c0c356ef2891b39dd7d07f5d82c8ed0a",
                 "shasum": ""
             },
             "require": {
@@ -739,7 +739,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-08-26 05:51:59"
+            "time": "2016-09-06 16:07:45"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

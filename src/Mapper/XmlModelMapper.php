@@ -7,7 +7,8 @@
  */
 
 namespace Mapper;
-use Common\ModelReflection\Enum\TypeEnum;
+use Common\ModelReflection\Enum\AnnotationEnum;
+use Common\ModelReflection\ModelClass;
 use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Iteration;
 use Common\Util\Validation;
@@ -15,8 +16,12 @@ use Common\Util\Xml;
 
 class XmlModelMapper extends ModelMapper implements IModelMapper {
 
+    const ATTR_KEY = '@attributes';
+    const VALUE_KEY = '@value';
+
     /**
-     * @param mixed $source
+     * @override Converts xml to an object and then maps
+     * @param string $source
      * @param object $model
      * @return object
      */
@@ -24,22 +29,56 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $domDocument = new \DOMDocument();
         $domDocument->loadXML($source);
         $domElement = $domDocument->documentElement;
-        $object = $this->domNodeToObject($domElement);
-        $model = parent::map($object, $model);
+        $source = $this->domNodeToObject($domElement);
 
-        return $model;
+        $mappedModel = $this->mapModel($source, $model);
+
+        return $mappedModel;
     }
 
     /**
+     * @override Maps xml attributes and node values accordingly
+     * @param object $source
      * @param object $model
-     * @return string
+     * @return object
      */
-    public function unmap($model) {
-        $object = parent::unmap($model);
-        $rootName = parent::getModelRootName($model);
-        $xml = $this->objectToXml($object, $rootName);
+    protected function mapModel($source, $model) {
+        if(!is_object($source) || Validation::isEmpty($source)) {
+            throw new \InvalidArgumentException('Source must be an object with properties.');
+        }
+        if(!is_object($model) || Validation::isEmpty($model)) {
+            throw new \InvalidArgumentException('Model must be an object with properties.');
+        }
+        $modelClass = new ModelClass($model);
 
-        return $xml;
+        foreach($modelClass->getProperties() as $property) {
+
+            if($property->getDocBlock()->hasAnnotation(AnnotationEnum::XML_ATTRIBUTE)) {
+                $mappedValue = null;
+                $attributesKey = self::ATTR_KEY;
+                if(isset($source->$attributesKey) && isset($source->$attributesKey[$property->getName()])) {
+                    $mappedValue = $source->$attributesKey[$property->getName()];
+                }
+                $property->setPropertyValue($mappedValue);
+                continue;
+            }
+
+            if($property->getDocBlock()->hasAnnotation(AnnotationEnum::XML_NODE_VALUE)) {
+                $mappedValue = null;
+                $valueKey = self::VALUE_KEY;
+                if(isset($source->$valueKey)) {
+                    $mappedValue = $source->$valueKey;
+                }
+                $property->setPropertyValue($mappedValue);
+                continue;
+            }
+
+            $sourceValue = Iteration::findValueByName($property->getName(), $source, $property->getPropertyValue());
+            $mappedValue = $this->mapPropertyByType($property->getType(), $sourceValue);
+            $property->setPropertyValue($mappedValue);
+        }
+
+        return $model;
     }
 
     /**
@@ -66,7 +105,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @return \stdClass
      */
     protected function mapAttributes(\DOMNode $domElement, $object) {
-        $attributesKey = parent::ATTR_KEY;
+        $attributesKey = self::ATTR_KEY;
         for($i = 0; $i < $domElement->attributes->length; $i++) {
             $key = $domElement->attributes->item($i)->nodeName;
             $value = $domElement->attributes->item($i)->nodeValue;
@@ -122,22 +161,73 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @return mixed
      */
     protected function mapDomText(\DOMNode $element, $object, bool $isElementArray) {
-        /** @var \DOMElement $element->parentNode */
-        $key = $element->parentNode->tagName;
         $value = Iteration::typeFilter($element->nodeValue);
-        $attributesKey = $attributesKey = parent::ATTR_KEY;
-
         $result = $value;
+
+        $attributesKey = self::ATTR_KEY;
+        $valueKey = self::VALUE_KEY;
         if(isset($object->$attributesKey)) {
             $result = clone $object;
-            $result->$key = $value;
+            $result->$valueKey = $value;
         }
 
         if($isElementArray) {
-            $result = Iteration::pushArrayValue($object, $key, $result);
+            $result = Iteration::pushArrayValue($object, $valueKey, $result);
         }
 
         return $result;
+    }
+
+    /**
+     * @override Unmaps to an object, then converts it to xml
+     * @param object $model
+     * @return string
+     */
+    public function unmap($model) {
+        $source = $this->unmapModel($model);
+
+        $modelClass = new ModelClass($model);
+        $rootName = $modelClass->getRootName();
+        $xml = $this->objectToXml($source, $rootName);
+
+        return $xml;
+    }
+
+    /**
+     * @override Unmaps xml attributes and node values accordingly
+     * @param object $model
+     * @return \stdClass
+     */
+    protected function unmapModel($model) {
+        if(!is_object($model) || Validation::isEmpty($model)) {
+            throw new \InvalidArgumentException('Model must be an object with properties.');
+        }
+        $modelClass = new ModelClass($model);
+        $unmappedObject = new \stdClass();
+        foreach($modelClass->getProperties() as $property) {
+            $propertyKey = $property->getName();
+            $propertyValue = $property->getPropertyValue();
+            if(Validation::isEmpty($propertyValue)) {
+                continue;
+            }
+
+            if($property->getDocBlock()->hasAnnotation(AnnotationEnum::XML_ATTRIBUTE)) {
+                $attributeKey = self::ATTR_KEY;
+                $unmappedObject->$attributeKey = new \stdClass();
+                $unmappedObject->$attributeKey->$propertyKey = $propertyValue;
+                continue;
+            }
+
+            if($property->getDocBlock()->hasAnnotation(AnnotationEnum::XML_NODE_VALUE)) {
+                $valueKey = self::VALUE_KEY;
+                $unmappedObject->$valueKey = $propertyValue;
+                continue;
+            }
+
+            $unmappedObject->$propertyKey = $this->unmapValueByType($property->getType(), $propertyValue);
+        }
+
+        return $unmappedObject;
     }
 
     /**
@@ -154,9 +244,20 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
 
         $this->addDomElementAttributes($source, $domElement);
 
-        foreach($source as $key => $value) {
-            $this->populateDomElementByType($domElement, $key, $value);
+        $valueKey = self::VALUE_KEY;
+        if(isset($source->$valueKey)) {
+            if(is_bool($source->$valueKey)) {
+                $source->$valueKey = ($source->$valueKey) ? 'true' : 'false';
+
+            }
+            $domElement->nodeValue = $source->$valueKey;
         }
+        else {
+            foreach ($source as $key => $value) {
+                $this->populateDomElementByType($domElement, $key, $value);
+            }
+        }
+
         $xml = $domElement->ownerDocument->saveXML();
         $xml = str_replace("\n", "", $xml);
 
@@ -185,7 +286,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param \DOMElement $domElement
      */
     protected function addDomElementAttributes($source, \DOMElement $domElement) {
-        $attributesKey = parent::ATTR_KEY;
+        $attributesKey = self::ATTR_KEY;
         if(isset($source->$attributesKey) && !Validation::isEmpty($source->$attributesKey)){
             foreach($source->$attributesKey as $attrKey => $attrValue) {
                 $domElement->setAttribute($attrKey, $attrValue);
@@ -260,22 +361,13 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
     }
 
     /**
-     * @override
+     * @override Added the filter for different value types, since they all come out as strings
      * @param ModelPropertyType $propertyType
      * @param mixed $value
      * @return mixed
      */
     protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
-        $mappedPropertyValue = Iteration::typeFilter($value);
-        if($propertyType->isModel()) {
-            if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
-                $mappedPropertyValue = $this->mapModelArray($propertyType->getModelClassName(), $value);
-            }
-            elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
-                $mappedPropertyValue = $this->mapModel($propertyType->getModelClassName(), $value);
-            }
-        }
-
-        return $mappedPropertyValue;
+        $filteredValue = Iteration::typeFilter($value);
+        return parent::mapPropertyByType($propertyType, $filteredValue);
     }
 }

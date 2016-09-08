@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=7.0.1",
-        "runz0rd/common-php": "2.2.3"
+        "runz0rd/common-php": "2.2.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~5"

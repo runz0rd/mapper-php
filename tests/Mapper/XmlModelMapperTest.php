@@ -67,6 +67,9 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $nestedModel->attribute1 = 'attribute1';
         $model->model = $nestedModel;
         $model->modelArray = [$nestedModel,$nestedModel];
+        $model->xml = new XmlTestModel();
+        $model->xml->attributeTest = 'attribute';
+        $model->xml->value = 'nodeValue';
 
         $xml = Xml::loadFromFile(__DIR__ . '/xml/valid_testModel.xml');
 

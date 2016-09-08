@@ -101,7 +101,7 @@ class NestedTestModel {
     public $multipleRequiredInteger;
 
     /**
-     * @attribute
+     * @xmlAttribute
      * @var string
      */
     public $attribute1;
