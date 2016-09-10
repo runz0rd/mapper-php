@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/runz0rd/common-php.git",
-                "reference": "1e6975868d465552e2612733d5819712af138881"
+                "reference": "8b264b363bc860eea2169cdedd38202e209b6331"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/1e6975868d465552e2612733d5819712af138881",
-                "reference": "1e6975868d465552e2612733d5819712af138881",
+                "url": "https://api.github.com/repos/runz0rd/common-php/zipball/8b264b363bc860eea2169cdedd38202e209b6331",
+                "reference": "8b264b363bc860eea2169cdedd38202e209b6331",
                 "shasum": ""
             },
             "require": {
@@ -52,7 +52,7 @@
                 "php",
                 "utilities"
             ],
-            "time": "2016-09-08 21:01:40"
+            "time": "2016-09-10 15:44:54"
         }
     ],
     "packages-dev": [

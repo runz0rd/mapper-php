@@ -9,6 +9,7 @@
 namespace Mapper;
 use Common\ModelReflection\Enum\AnnotationEnum;
 use Common\ModelReflection\ModelClass;
+use Common\ModelReflection\ModelProperty;
 use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Iteration;
 use Common\Util\Validation;
@@ -30,7 +31,6 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $domDocument->loadXML($source);
         $domElement = $domDocument->documentElement;
         $source = $this->domNodeToObject($domElement);
-
         $mappedModel = $this->mapModel($source, $model);
 
         return $mappedModel;
@@ -89,7 +89,8 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $object = new \stdClass();
         $result = null;
 
-        $object = $this->mapAttributes($domElement, $object);
+        $this->mapAttributes($domElement, $object);
+        $this->mapNamespaces($domElement, $object);
 
         for($i = 0; $i < $domElement->childNodes->length; $i++) {
             $element = $domElement->childNodes->item($i);
@@ -111,8 +112,40 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
             $value = $domElement->attributes->item($i)->nodeValue;
             $object->$attributesKey[$key] = $value;
         }
+    }
 
-        return $object;
+    /**
+     * @param \DOMNode $domElement
+     * @param $object
+     * @return \stdClass
+     */
+    protected function mapNamespaces(\DOMNode $domElement, $object) {
+        $elementNamespaces = $this->getNameSpaces($domElement);
+        $parentNamespaces = $this->getNameSpaces($domElement->parentNode);
+        $newNamespaces = array_diff($elementNamespaces, $parentNamespaces);
+        unset($newNamespaces['xmlns:xml']);
+
+        $attributesKey = self::ATTR_KEY;
+        foreach($newNamespaces as $key => $value) {
+            $object->$attributesKey[$key] = $value;
+        }
+    }
+
+    /**
+     * @param \DOMNode $domElement
+     * @return array
+     */
+    protected function getNameSpaces(\DOMNode $domElement) {
+        $namespaces = [];
+        if(!is_null($domElement->ownerDocument)) {
+            $xpath = new \DOMXPath($domElement->ownerDocument);
+            /** @var \DOMNode $node */
+            foreach ($xpath->query('namespace::*', $domElement) as $node) {
+                $namespaces[$node->nodeName] = $node->nodeValue;
+            }
+        }
+
+        return $namespaces;
     }
 
     /**
@@ -213,8 +246,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
 
             if($property->getDocBlock()->hasAnnotation(AnnotationEnum::XML_ATTRIBUTE)) {
                 $attributeKey = self::ATTR_KEY;
-                $unmappedObject->$attributeKey = new \stdClass();
-                $unmappedObject->$attributeKey->$propertyKey = $propertyValue;
+                $unmappedObject->$attributeKey[$propertyKey] = $propertyValue;
                 continue;
             }
 

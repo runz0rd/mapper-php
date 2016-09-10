@@ -11,7 +11,7 @@ use Traits\ConvertibleTrait;
 use Traits\ValidatableTrait;
 
 /**
- * @root testModel
+ * @xmlRoot testModel
  * Class TestModel
  * multi-line comment test
  */
