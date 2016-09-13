@@ -9,7 +9,6 @@
 namespace Mapper;
 use Common\ModelReflection\Enum\AnnotationEnum;
 use Common\ModelReflection\ModelClass;
-use Common\ModelReflection\ModelProperty;
 use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Iteration;
 use Common\Util\Validation;
@@ -24,11 +23,15 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @override Converts xml to an object and then maps
      * @param string $source
      * @param object $model
+     * @throws ModelMapperException
      * @return object
      */
     public function map($source, $model) {
         $domDocument = new \DOMDocument();
-        $domDocument->loadXML($source);
+        $xmlLoadSuccess = $domDocument->loadXML($source);
+        if(!$xmlLoadSuccess) {
+            throw new ModelMapperException('Invalid xml provided.');
+        }
         $domElement = $domDocument->documentElement;
         $source = $this->domNodeToObject($domElement);
         $mappedModel = $this->mapModel($source, $model);
@@ -94,7 +97,18 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
 
         for($i = 0; $i < $domElement->childNodes->length; $i++) {
             $element = $domElement->childNodes->item($i);
-            $result = $this->mapByDomNodeType($element, $object);
+            $isElementArray = Xml::isDomNodeArray($element->parentNode, $element->nodeName);
+            switch($element->nodeType) {
+                case XML_ELEMENT_NODE:
+                    $result = $this->mapDomElement($element, $object, $isElementArray);
+                    break;
+                case XML_TEXT_NODE:
+                    if($element->nodeValue == ' ') {
+                        continue;
+                    }
+                    $result = $this->mapDomText($element, $object, $isElementArray);
+                    break;
+            }
         }
 
         return $result;
@@ -146,25 +160,6 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         }
 
         return $namespaces;
-    }
-
-    /**
-     * @param \DOMNode $element
-     * @param object $object
-     * @return mixed
-     */
-    protected function mapByDomNodeType(\DOMNode $element, $object) {
-        $isElementArray = Xml::isDomNodeArray($element->parentNode, $element->nodeName);
-        switch($element->nodeType) {
-            case XML_ELEMENT_NODE:
-                $object = $this->mapDomElement($element, $object, $isElementArray);
-                break;
-            case XML_TEXT_NODE:
-                $object = $this->mapDomText($element, $object, $isElementArray);
-                break;
-        }
-
-        return $object;
     }
 
     /**
