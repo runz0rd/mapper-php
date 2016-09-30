@@ -77,9 +77,8 @@ class ModelMapper implements IModelMapper {
 	protected function mapModelArray(array $source, $model) {
 		$mappedModelArray = null;
 		foreach($source as $key => $value) {
-//			$mappedModelArray[$key] = $value;
 			if(is_object($value)) {
-				$mappedModelArray[$key] = $this->mapModel($value, $model);
+				$mappedModelArray[$key] = clone $this->mapModel($value, $model);
 			}
 		}
 
