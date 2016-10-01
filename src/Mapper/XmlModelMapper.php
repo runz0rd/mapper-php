@@ -27,8 +27,9 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @return object
      */
     public function map($source, $model) {
+        $xml = Xml::removeWhitespace($source);
         $domDocument = new \DOMDocument();
-        $xmlLoadSuccess = $domDocument->loadXML($source);
+        $xmlLoadSuccess = $domDocument->loadXML($xml);
         if(!$xmlLoadSuccess) {
             throw new ModelMapperException('Invalid xml provided.');
         }
@@ -103,9 +104,6 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
                     $result = $this->mapDomElement($element, $object, $isElementArray);
                     break;
                 case XML_TEXT_NODE:
-                    if($element->nodeValue == ' ') {
-                        continue;
-                    }
                     $result = $this->mapDomText($element, $object, $isElementArray);
                     break;
             }
