@@ -74,8 +74,9 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function validMapValues() {
-        $nestedJson = '{"noType":null,"boolTrue":true,"boolFalse":false,"string":"a","namedString":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[1,2,3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"requiredString":null,"alwaysRequiredBoolean":true,"multipleRequiredInteger":null,"attribute1":null,"emailRule":null,"multipleRules":null}';
-        $json = '{"noType":null,"boolTrue":true,"boolFalse":false,"string":"a","namedString123":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[1,2,3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"model":'.$nestedJson.',"modelArray":['.$nestedJson.', '.$nestedJson.'],"requiredString":null,"alwaysRequiredBoolean":true,"multipleRequiredInteger":null,"attribute1":null,"emailRule":null,"multipleRules":null}';
+        $nestedJson1 = '{"noType":null,"boolTrue":true,"boolFalse":false,"string":"a","namedString":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[1,2,3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"requiredString":null,"alwaysRequiredBoolean":true,"multipleRequiredInteger":null,"attribute1":null,"emailRule":null,"multipleRules":null}';
+        $nestedJson2 = '{"noType":null,"boolTrue":true,"boolFalse":false,"string":"ab","namedString":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[1,2,3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"requiredString":null,"alwaysRequiredBoolean":true,"multipleRequiredInteger":null,"attribute1":null,"emailRule":null,"multipleRules":null}';
+        $json = '{"noType":null,"boolTrue":true,"boolFalse":false,"string":"a","namedString123":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[1,2,3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"model":'.$nestedJson1.',"modelArray":['.$nestedJson1.', '.$nestedJson2.'],"requiredString":null,"alwaysRequiredBoolean":true,"multipleRequiredInteger":null,"attribute1":null,"emailRule":null,"multipleRules":null}';
         $source = json_decode($json);
 
         $object = new stdClass();
@@ -95,10 +96,13 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
         $model->objectArray = [$object,$object,$object];
         $model->object = $object;
         $model->alwaysRequiredBoolean = true;
-        $nestedModel = new NestedTestModel();
-        $nestedModel->mapFromObject($model);
-        $model->model = $nestedModel;
-        $model->modelArray = [$nestedModel,$nestedModel];
+        $nestedModel1 = new NestedTestModel();
+        $nestedModel1->mapFromObject($model);
+        $model->model = $nestedModel1;
+        $nestedModel2= new NestedTestModel();
+        $nestedModel2->mapFromObject($model);
+        $nestedModel2->string = 'ab';
+        $model->modelArray = [$nestedModel1,$nestedModel2];
 
         return [
             [$source, $model]

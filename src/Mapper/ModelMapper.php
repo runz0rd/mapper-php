@@ -58,11 +58,12 @@ class ModelMapper implements IModelMapper {
 		if($propertyType->isModel()) {
             $modelClassName = $propertyType->getModelClassName();
 			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
-				$mappedPropertyValue = $this->mapModelArray($value, new $modelClassName());
+				$mappedPropertyValue = $this->mapModelArray($value, $modelClassName);
 			}
 			elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
 			    $modelClassName = $propertyType->getModelClassName();
-				$mappedPropertyValue = $this->mapModel($value, new $modelClassName());
+                $model = ModelClass::instantiate($modelClassName);
+				$mappedPropertyValue = $this->mapModel($value, $model);
 			}
 		}
 
@@ -70,15 +71,15 @@ class ModelMapper implements IModelMapper {
 	}
 
 	/**
-	 * @param object $model
+	 * @param string $modelClassName
 	 * @param array $source
 	 * @return array
 	 */
-	protected function mapModelArray(array $source, $model) {
+	protected function mapModelArray(array $source, string $modelClassName) {
 		$mappedModelArray = null;
 		foreach($source as $key => $value) {
-//			$mappedModelArray[$key] = $value;
 			if(is_object($value)) {
+                $model = ModelClass::instantiate($modelClassName);
 				$mappedModelArray[$key] = $this->mapModel($value, $model);
 			}
 		}
