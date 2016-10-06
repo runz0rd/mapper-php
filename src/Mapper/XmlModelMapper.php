@@ -170,12 +170,12 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $value = $this->domNodeToObject($element);
         $key = $element->nodeName;
         if($isElementArray) {
-            $result = Iteration::pushArrayValue($object, $key, $value);
+            Iteration::pushArrayValue($object, $key, $value);
         }
         else {
             $object->$key = $value;
-            $result = $object;
         }
+        $result = $object;
 
         return $result;
     }
