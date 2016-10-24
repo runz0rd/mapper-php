@@ -8,6 +8,7 @@
 
 namespace Mapper;
 use Common\ModelReflection\Enum\AnnotationEnum;
+use Common\ModelReflection\Enum\TypeEnum;
 use Common\ModelReflection\ModelClass;
 use Common\ModelReflection\ModelPropertyType;
 use Common\Util\Iteration;
@@ -387,12 +388,17 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
 
     /**
      * @override Added the filter for different value types, since they all come out as strings
+     * @override Single xml array values would show up as non array, so logic is slightly different here
      * @param ModelPropertyType $propertyType
      * @param mixed $value
      * @return mixed
      */
     protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
-        $filteredValue = Iteration::typeFilter($value);
-        return parent::mapPropertyByType($propertyType, $filteredValue);
+        $value = Iteration::typeFilter($value);
+        if($propertyType->getActualType() === TypeEnum::ARRAY && !is_array($value) ) {
+            $value = [$value];
+        }
+
+        return parent::mapPropertyByType($propertyType, $value);
     }
 }

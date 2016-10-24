@@ -55,7 +55,7 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $model->integer = 5;
         $model->array = [1,'a',3];
         $model->stringArray = ['a','b','c'];
-        $model->integerArray = [1,2,3];
+        $model->integerArray = [3];
         $model->booleanArray = [true,true,false];
         $model->objectArray = [$object,$object,$object];
         $model->object = $object;

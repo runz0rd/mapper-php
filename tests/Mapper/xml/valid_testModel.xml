@@ -11,8 +11,6 @@
     <stringArray>a</stringArray>
     <stringArray>b</stringArray>
     <stringArray>c</stringArray>
-    <integerArray>1</integerArray>
-    <integerArray>2</integerArray>
     <integerArray>3</integerArray>
     <booleanArray>true</booleanArray>
     <booleanArray>true</booleanArray>
@@ -41,8 +39,6 @@
         <stringArray>a</stringArray>
         <stringArray>b</stringArray>
         <stringArray>c</stringArray>
-        <integerArray>1</integerArray>
-        <integerArray>2</integerArray>
         <integerArray>3</integerArray>
         <booleanArray>true</booleanArray>
         <booleanArray>true</booleanArray>
@@ -75,8 +71,6 @@
         <stringArray>a</stringArray>
         <stringArray>b</stringArray>
         <stringArray>c</stringArray>
-        <integerArray>1</integerArray>
-        <integerArray>2</integerArray>
         <integerArray>3</integerArray>
         <booleanArray>true</booleanArray>
         <booleanArray>true</booleanArray>
@@ -109,8 +103,6 @@
         <stringArray>a</stringArray>
         <stringArray>b</stringArray>
         <stringArray>c</stringArray>
-        <integerArray>1</integerArray>
-        <integerArray>2</integerArray>
         <integerArray>3</integerArray>
         <booleanArray>true</booleanArray>
         <booleanArray>true</booleanArray>
