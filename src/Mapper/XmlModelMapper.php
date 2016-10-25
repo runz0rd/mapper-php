@@ -94,8 +94,8 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         $object = new \stdClass();
         $result = null;
 
-        $this->mapAttributes($domElement, $object);
-        $this->mapNamespaces($domElement, $object);
+        $result = $this->mapAttributes($domElement, $object);
+        $result = $this->mapNamespaces($domElement, $object);
 
         for($i = 0; $i < $domElement->childNodes->length; $i++) {
             $element = $domElement->childNodes->item($i);
@@ -125,6 +125,8 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
             $value = $domElement->attributes->item($i)->nodeValue;
             $object->$attributesKey[$key] = $value;
         }
+
+        return $object;
     }
 
     /**
@@ -142,6 +144,8 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
         foreach($newNamespaces as $key => $value) {
             $object->$attributesKey[$key] = $value;
         }
+
+        return $object;
     }
 
     /**

@@ -127,4 +127,5 @@
     <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
     <multipleRequiredInteger>5</multipleRequiredInteger>
     <xml attributeTest="attribute">nodeValue</xml>
+    <xmlWithoutValue attributeTest="attribute"/>
 </testModel>
