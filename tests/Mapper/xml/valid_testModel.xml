@@ -27,7 +27,7 @@
     <object>
         <a>1</a>
     </object>
-    <model attribute1="attribute1">
+    <model attribute1="attribute2">
         <boolTrue>true</boolTrue>
         <boolFalse>false</boolFalse>
         <string>a</string>
@@ -59,7 +59,7 @@
         <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
         <multipleRequiredInteger>5</multipleRequiredInteger>
     </model>
-    <modelArray attribute1="attribute1">
+    <modelArray attribute1="attribute2">
         <boolTrue>true</boolTrue>
         <boolFalse>false</boolFalse>
         <string>a</string>
@@ -91,7 +91,7 @@
         <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
         <multipleRequiredInteger>5</multipleRequiredInteger>
     </modelArray>
-    <modelArray attribute1="attribute1">
+    <modelArray attribute1="attribute3">
         <boolTrue>true</boolTrue>
         <boolFalse>false</boolFalse>
         <string>a</string>
@@ -126,6 +126,6 @@
     <requiredString>requiredString</requiredString>
     <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
     <multipleRequiredInteger>5</multipleRequiredInteger>
-    <xml attributeTest="attribute">nodeValue</xml>
-    <xmlWithoutValue attributeTest="attribute"/>
+    <xml xmlns:test="testns1" attributeTest="attribute">nodeValue</xml>
+    <xmlWithoutValue xmlns:test="testns2" attributeTest="attribute"/>
 </testModel>

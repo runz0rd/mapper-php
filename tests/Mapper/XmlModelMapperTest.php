@@ -62,16 +62,21 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $model->requiredString = 'requiredString';
         $model->alwaysRequiredBoolean = false;
         $model->multipleRequiredInteger = 5;
-        $nestedModel = new NestedTestModel();
-        $nestedModel->mapFromObject($model);
-        $nestedModel->attribute1 = 'attribute1';
-        $model->model = $nestedModel;
-        $model->modelArray = [$nestedModel,$nestedModel];
+        $nestedModel1 = new NestedTestModel();
+        $nestedModel1->mapFromObject($model);
+        $nestedModel1->attribute1 = 'attribute2';
+        $nestedModel2 = clone $nestedModel1;
+        $nestedModel2->mapFromObject($model);
+        $nestedModel2->attribute1 = 'attribute3';
+        $model->model = $nestedModel1;
+        $model->modelArray = [$nestedModel1,$nestedModel2];
         $model->xml = new XmlTestModel();
+        $model->xml->ns = 'testns1';
         $model->xml->attributeTest = 'attribute';
         $model->xml->value = 'nodeValue';
-        $model->xmlWithoutValue = new XmlTestWithoutValue();
+        $model->xmlWithoutValue = new XmlTestModel();
         $model->xmlWithoutValue->attributeTest = 'attribute';
+        $model->xmlWithoutValue->ns = 'testns2';
 
         $xml = Xml::loadFromFile(__DIR__ . '/xml/valid_testModel.xml');
 

@@ -16,6 +16,12 @@ class XmlTestModel {
     use ValidatableTrait;
 
     /**
+     * @name xmlns:test
+     * @xmlAttribute
+     */
+    public $ns;
+
+    /**
      * @xmlAttribute
      */
     public $attributeTest;

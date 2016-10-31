@@ -136,7 +136,7 @@ class TestModel {
     public $xml;
 
     /**
-     * @var XmlTestWithoutValue
+     * @var XmlTestModel
      */
     public $xmlWithoutValue;
 }
