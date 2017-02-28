@@ -28,5 +28,5 @@ interface IRule {
      * @param array $params
      * @throws \Throwable
      */
-    function validate(ModelProperty $property, array $params = []);
+    function validate(ModelProperty $property, array $params = array());
 }

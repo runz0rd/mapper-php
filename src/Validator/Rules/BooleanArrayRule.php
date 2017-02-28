@@ -14,10 +14,10 @@ use Validator\IRule;
 class BooleanArrayRule implements IRule {
 
     function getNames() {
-        return ['bool[]', 'boolean[]'];
+        return array('bool[]', 'boolean[]');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateArray($property->getPropertyValue());
         foreach($property->getPropertyValue() as $value) {
             Validation::validateBoolean($value);

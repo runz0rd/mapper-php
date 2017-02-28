@@ -60,17 +60,17 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function invalidMapValues() {
-        return [
-            [null, new TestModel()],
-            ['', new TestModel()],
-            [1, new TestModel()],
-            [false, new TestModel()],
-            [array(), new TestModel()],
-            [new stdClass(), new TestModel()],
-            [new TestModel(), 1],
-            [new TestModel(), new DateTime()],
-            [new TestModel(), new stdClass()]
-        ];
+        return array(
+            array(null, new TestModel()),
+            array('', new TestModel()),
+            array(1, new TestModel()),
+            array(false, new TestModel()),
+            array(array(), new TestModel()),
+            array(new stdClass(), new TestModel()),
+            array(new TestModel(), 1),
+            array(new TestModel(), new DateTime()),
+            array(new TestModel(), new stdClass())
+        );
     }
 
     public function validMapValues() {
@@ -89,11 +89,11 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
         $model->string = 'a';
         $model->namedString = 'named';
         $model->integer = 5;
-        $model->array = [1,'a',3];
-        $model->stringArray = ['a','b','c'];
-        $model->integerArray = [1,2,3];
-        $model->booleanArray = [true,true,false];
-        $model->objectArray = [$object,$object,$object];
+        $model->array = array(1,'a',3);
+        $model->stringArray = array('a','b','c');
+        $model->integerArray = array(1,2,3);
+        $model->booleanArray = array(true,true,false);
+        $model->objectArray = array($object,$object,$object);
         $model->object = $object;
         $model->alwaysRequiredBoolean = true;
         $nestedModel1 = new NestedTestModel();
@@ -102,23 +102,23 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
         $nestedModel2= new NestedTestModel();
         $nestedModel2->mapFromObject($model);
         $nestedModel2->string = 'ab';
-        $model->modelArray = [$nestedModel1,$nestedModel2];
+        $model->modelArray = array($nestedModel1,$nestedModel2);
 
-        return [
-            [$source, $model]
-        ];
+        return array(
+            array($source, $model)
+        );
     }
 
     public function invalidUnmapValues() {
-        return [
-            [null],
-            [''],
-            [1,],
-            [false],
-            [array()],
-            [new stdClass()],
-            [new DateTime()]
-        ];
+        return array(
+            array(null),
+            array(''),
+            array(1,),
+            array(false),
+            array(array()),
+            array(new stdClass()),
+            array(new DateTime())
+        );
     }
 
     public function validUnmapValues() {
@@ -136,20 +136,20 @@ class ModelMapperTest extends \PHPUnit_Framework_TestCase {
         $model->string = 'a';
         $model->namedString = 'named';
         $model->integer = 5;
-        $model->array = [1,'a',3];
-        $model->stringArray = ['a','b','c'];
-        $model->integerArray = [1,2,3];
-        $model->booleanArray = [true,true,false];
-        $model->objectArray = [$object,$object,$object];
+        $model->array = array(1,'a',3);
+        $model->stringArray = array('a','b','c');
+        $model->integerArray = array(1,2,3);
+        $model->booleanArray = array(true,true,false);
+        $model->objectArray = array($object,$object,$object);
         $model->object = $object;
         $model->alwaysRequiredBoolean = true;
         $nestedModel = new NestedTestModel();
         $nestedModel->mapFromObject($model);
         $model->model = $nestedModel;
-        $model->modelArray = [$nestedModel,$nestedModel];
+        $model->modelArray = array($nestedModel,$nestedModel);
 
-        return [
-            [$model, $unmappedObject]
-        ];
+        return array(
+            array($model, $unmappedObject)
+        );
     }
 }

@@ -53,11 +53,11 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $model->string = 'a';
         $model->namedString = 'named';
         $model->integer = 5;
-        $model->array = [1,'a',3];
-        $model->stringArray = ['a','b','c'];
-        $model->integerArray = [3];
-        $model->booleanArray = [true,true,false];
-        $model->objectArray = [$object,$object,$object];
+        $model->array = array(1,'a',3);
+        $model->stringArray = array('a','b','c');
+        $model->integerArray = array(3);
+        $model->booleanArray = array(true,true,false);
+        $model->objectArray = array($object,$object,$object);
         $model->object = $object;
         $model->requiredString = 'requiredString';
         $model->alwaysRequiredBoolean = false;
@@ -69,7 +69,7 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $nestedModel2->mapFromObject($model);
         $nestedModel2->attribute1 = 'attribute3';
         $model->model = $nestedModel1;
-        $model->modelArray = [$nestedModel1,$nestedModel2];
+        $model->modelArray = array($nestedModel1,$nestedModel2);
         $model->xml = new XmlTestModel();
         $model->xml->ns = 'testns1';
         $model->xml->attributeTest = 'attribute';
@@ -80,8 +80,8 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
 
         $xml = Xml::loadFromFile(__DIR__ . '/xml/valid_testModel.xml');
 
-        return [
-            [$model, $xml]
-        ];
+        return array(
+            array($model, $xml)
+        );
     }
 }

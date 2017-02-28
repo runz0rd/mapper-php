@@ -14,10 +14,10 @@ use Validator\IRule;
 class IntegerRule implements IRule {
 
     function getNames() {
-        return ['int', 'integer'];
+        return array('int', 'integer');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateInteger($property->getPropertyValue());
     }
 }

@@ -79,7 +79,7 @@ class ModelValidator {
             $definedRules = $property->getDocBlock()->getAnnotation(AnnotationEnum::RULE);
             foreach($definedRules as $definedRule) {
 	            $ruleName = strtolower($definedRule);
-	            $params = [];
+	            $params = array();
 				if(preg_match('/(.*)\((.*)\)/', $definedRule, $matches)) {
 					$ruleName = trim($matches[1]);
 					$params = array_map('trim', explode(",", $matches[2]));
@@ -95,7 +95,7 @@ class ModelValidator {
      * @param array $params
      * @throws ModelValidatorException
      */
-	protected function validateRule(ModelProperty $property, string $ruleName, array $params = []) {
+	protected function validateRule(ModelProperty $property, string $ruleName, array $params = array()) {
 		if(!isset($this->rules[$ruleName])) {
             throw new ModelValidatorException('No rule named "' . $ruleName . '" defined.');
         }
@@ -117,7 +117,7 @@ class ModelValidator {
 		if($property->getDocBlock()->hasAnnotation(AnnotationEnum::VAR) && !is_null($property->getPropertyValue())) {
 			$this->validateRule($property, $property->getType()->getActualType());
 		}
-		$this->validateRule($property, 'required', [$requiredType]);
+		$this->validateRule($property, 'required', array($requiredType));
 		$this->validateRules($property);
 
 		if($property->getType()->isModel() && !Validation::isEmpty($property->getPropertyValue())) {

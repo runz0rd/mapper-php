@@ -50,11 +50,11 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $model->string = 'a';
         $model->namedString = 'named';
         $model->integer = 5;
-        $model->array = [1,'a',3];
-        $model->stringArray = ['a','b','c'];
-        $model->integerArray = [1,2,3];
-        $model->booleanArray = [true,true,false];
-        $model->objectArray = [$object,$object,$object];
+        $model->array = array(1,'a',3);
+        $model->stringArray = array('a','b','c');
+        $model->integerArray = array(1,2,3);
+        $model->booleanArray = array(true,true,false);
+        $model->objectArray = array($object,$object,$object);
         $model->object = $object;
         $model->requiredString = 'requiredString';
         $model->alwaysRequiredBoolean = false;
@@ -62,15 +62,15 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $nestedModel = new NestedTestModel();
         $nestedModel->mapFromObject($model);
         $model->model = $nestedModel;
-        $model->modelArray = [$nestedModel,$nestedModel];
+        $model->modelArray = array($nestedModel,$nestedModel);
         $model->emailRule = 'test@test.com';
         $model->multipleRules = '192.168.0.1';
 
         return [
-            [$model, 'requiredString'],
-            [$model, ''],
-            [$model, 'requiredInteger'],
-            [$model, 'testRequired']
+            array($model, 'requiredString'),
+            array($model, ''),
+            array($model, 'requiredInteger'),
+            array($model, 'testRequired')
         ];
     }
 
@@ -85,11 +85,11 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $model->string = 'a';
         $model->namedString = 'named';
         $model->integer = 5;
-        $model->array = [1,'a',3];
-        $model->stringArray = ['a','b','c'];
-        $model->integerArray = [1,2,3];
-        $model->booleanArray = [true,true,false];
-        $model->objectArray = [$object,$object,$object];
+        $model->array = array(1,'a',3);
+        $model->stringArray = array('a','b','c');
+        $model->integerArray = array(1,2,3);
+        $model->booleanArray = array(true,true,false);
+        $model->objectArray = array($object,$object,$object);
         $model->object = $object;
         $model->requiredString = 'requiredString';
         $model->alwaysRequiredBoolean = false;
@@ -97,7 +97,7 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $nestedModel = new NestedTestModel();
         $nestedModel->mapFromObject($model);
         $model->model = $nestedModel;
-        $model->modelArray = [$nestedModel,$nestedModel];
+        $model->modelArray = array($nestedModel,$nestedModel);
         $model->emailRule = 'test@test.com';
         $model->multipleRules = 'test@test.com';
 
@@ -156,43 +156,43 @@ class ModelValidatorTest extends PHPUnit_Framework_TestCase {
         $invalidModel18->multipleRules = 3;
 
         $invalidModel19 = clone $model;
-        $invalidModel19->stringArray = [3];
+        $invalidModel19->stringArray = array(3);
 
         $invalidModel20 = clone $model;
-        $invalidModel20->integerArray = [3,'asd'];
+        $invalidModel20->integerArray = array(3,'asd');
 
         $invalidModel21 = clone $model;
-        $invalidModel21->booleanArray = [true,'asd'];
+        $invalidModel21->booleanArray = array(true,'asd');
 
         $invalidModel22 = clone $model;
-        $invalidModel22->objectArray = [new stdClass(),'asd'];
+        $invalidModel22->objectArray = array(new stdClass(),'asd');
 
         return [
-            [$invalidModel1, ''],
-            [$invalidModel2, ''],
-            [$invalidModel3, ''],
-            [$invalidModel4, ''],
-            [$invalidModel5, ''],
-            [$invalidModel6, ''],
-            [$invalidModel7, ''],
-            [$invalidModel8, 'requiredString'],
-            [$invalidModel9, 'requiredString'],
-            [$invalidModel10, 'requiredString'],
-            [$invalidModel11, ''],
-            [$invalidModel12, ''],
-            [$invalidModel13, ''],
-            [$invalidModel14, 'requiredInteger'],
-            [$invalidModel15, 'requiredInteger'],
-            [$invalidModel16, 'requiredInteger'],
-            [$invalidModel14, 'testRequired'],
-            [$invalidModel15, 'testRequired'],
-            [$invalidModel16, 'testRequired'],
-            [$invalidModel17, ''],
-            [$invalidModel18, ''],
-            [$invalidModel19, ''],
-            [$invalidModel20, ''],
-            [$invalidModel21, ''],
-            [$invalidModel22, '']
+            array($invalidModel1, ''),
+            array($invalidModel2, ''),
+            array($invalidModel3, ''),
+            array($invalidModel4, ''),
+            array($invalidModel5, ''),
+            array($invalidModel6, ''),
+            array($invalidModel7, ''),
+            array($invalidModel8, 'requiredString'),
+            array($invalidModel9, 'requiredString'),
+            array($invalidModel10, 'requiredString'),
+            array($invalidModel11, ''),
+            array($invalidModel12, ''),
+            array($invalidModel13, ''),
+            array($invalidModel14, 'requiredInteger'),
+            array($invalidModel15, 'requiredInteger'),
+            array($invalidModel16, 'requiredInteger'),
+            array($invalidModel14, 'testRequired'),
+            array($invalidModel15, 'testRequired'),
+            array($invalidModel16, 'testRequired'),
+            array($invalidModel17, ''),
+            array($invalidModel18, ''),
+            array($invalidModel19, ''),
+            array($invalidModel20, ''),
+            array($invalidModel21, ''),
+            array($invalidModel22, '')
         ];
     }
 }

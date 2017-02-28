@@ -7,9 +7,6 @@
  * Annotations provide custom naming, types and rules for model properties
  * Properly annotated, mapped models can be validated for different types and rules
 
-## Requirements:
-  * PHP 7.0.1+
-
 ## Installation
 ```
 composer require runz0rd/mapper-php

@@ -14,10 +14,10 @@ use Validator\IRule;
 class ObjectArrayRule implements IRule {
 
     function getNames() {
-        return ['object[]'];
+        return array('object[]');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateArray($property->getPropertyValue());
         foreach($property->getPropertyValue() as $value) {
             Validation::validateObject($value);

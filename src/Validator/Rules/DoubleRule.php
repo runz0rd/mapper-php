@@ -14,10 +14,10 @@ use Validator\IRule;
 class DoubleRule implements IRule {
 
     function getNames() {
-        return ['double'];
+        return array('double');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateDouble($property->getPropertyValue());
     }
 }

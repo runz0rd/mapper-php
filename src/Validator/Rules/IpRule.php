@@ -14,10 +14,10 @@ use Validator\ModelValidatorException;
 class IpRule implements IRule {
 
     function getNames() {
-        return ['IP'];
+        return array('IP');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         if(filter_var($property->getPropertyValue(), FILTER_VALIDATE_IP) === false) {
             throw new ModelValidatorException('Value is not an IP.');
         }

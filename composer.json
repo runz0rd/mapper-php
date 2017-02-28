@@ -15,7 +15,6 @@
         "issues": "https://github.com/runz0rd/mapper-php/issues"
     },
     "require": {
-        "php": ">=7.0.1",
         "runz0rd/common-php": "2.2.*"
     },
     "require-dev": {

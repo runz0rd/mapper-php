@@ -15,10 +15,10 @@ use Validator\ModelValidatorException;
 class RequiredRule implements IRule {
 
     function getNames() {
-        return ['required'];
+        return array('required');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         if(isset($params[0]) && $property->isRequired()) {
             $requiredAction = $params[0];
 

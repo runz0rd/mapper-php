@@ -14,10 +14,10 @@ use Validator\ModelValidatorException;
 class EmailRule implements IRule {
 
     function getNames() {
-        return ['email'];
+        return array('email');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         if(filter_var($property->getPropertyValue(), FILTER_VALIDATE_EMAIL) === false) {
             throw new ModelValidatorException('Value is not a valid email.');
         }

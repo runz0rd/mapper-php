@@ -14,10 +14,10 @@ use Validator\IRule;
 class DoubleArrayRule implements IRule {
 
     function getNames() {
-        return ['double[]'];
+        return array('double[]');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateArray($property->getPropertyValue());
         foreach($property->getPropertyValue() as $value) {
             Validation::validateDouble($value);

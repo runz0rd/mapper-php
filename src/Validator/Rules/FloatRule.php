@@ -14,10 +14,10 @@ use Validator\IRule;
 class FloatRule implements IRule {
 
     function getNames() {
-        return ['float'];
+        return array('float');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateFloat($property->getPropertyValue());
     }
 }

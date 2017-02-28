@@ -75,7 +75,7 @@ class ModelMapper implements IModelMapper {
 	 * @param array $source
 	 * @return array
 	 */
-	protected function mapModelArray(array $source, string $modelClassName) {
+	protected function mapModelArray(array $source, $modelClassName) {
 		$mappedModelArray = null;
 		foreach($source as $key => $value) {
 			if(is_object($value)) {
@@ -145,7 +145,7 @@ class ModelMapper implements IModelMapper {
 	 * @return array
 	 */
 	protected function unmapModelArray(array $modelArray) {
-		$unmappedObjectArray = [];
+		$unmappedObjectArray = array();
 		foreach($modelArray as $k => $v) {
 			$unmappedObjectArray[$k] = $this->unmapModel($v);
 		}

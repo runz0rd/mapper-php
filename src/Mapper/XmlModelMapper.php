@@ -153,7 +153,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @return array
      */
     protected function getNameSpaces(\DOMNode $domElement) {
-        $namespaces = [];
+        $namespaces = array();
         if(!is_null($domElement->ownerDocument)) {
             $xpath = new \DOMXPath($domElement->ownerDocument);
             /** @var \DOMNode $node */
@@ -171,7 +171,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param bool $isElementArray
      * @return mixed
      */
-    protected function mapDomElement(\DOMNode $element, $object, bool $isElementArray) {
+    protected function mapDomElement(\DOMNode $element, $object, $isElementArray) {
         $value = $this->domNodeToObject($element);
         $key = $element->nodeName;
         if($isElementArray) {
@@ -191,7 +191,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param bool $isElementArray
      * @return mixed
      */
-    protected function mapDomText(\DOMNode $element, $object, bool $isElementArray) {
+    protected function mapDomText(\DOMNode $element, $object, $isElementArray) {
         $value = Iteration::typeFilter($element->nodeValue);
         $result = $value;
 
@@ -266,7 +266,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @return string
      * @throws ModelMapperException
      */
-    protected function objectToXml($source, string $elementName) {
+    protected function objectToXml($source, $elementName) {
         $elementXml = '<'.$elementName.'></'.$elementName.'>';
         $domDocument = new \DOMDocument();
         $domDocument->loadXML($elementXml);
@@ -299,7 +299,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param string $key
      * @param mixed $value
      */
-    protected function populateDomElementByType(\DOMElement $domElement, string $key, $value) {
+    protected function populateDomElementByType(\DOMElement $domElement, $key, $value) {
         if(is_object($value)) {
             $this->addDomElementObject($domElement, $key, $value);
         }
@@ -330,7 +330,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param string $key
      * @param object $value
      */
-    protected function addDomElementObject(\DOMElement $domElement, string $key, $value) {
+    protected function addDomElementObject(\DOMElement $domElement, $key, $value) {
         $child = $this->createDomNode($domElement->ownerDocument, $key, $value);
         $domElement->appendChild($child);
     }
@@ -340,7 +340,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param $key
      * @param array $value
      */
-    protected function addDomElementArray(\DOMElement $domElement, string $key, array $value) {
+    protected function addDomElementArray(\DOMElement $domElement, $key, array $value) {
         foreach($value as $arrayKey => $arrayValue) {
             $this->populateDomElementByType($domElement, $key, $arrayValue);
         }
@@ -351,7 +351,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param string $key
      * @param mixed $value
      */
-    protected function addDomElement(\DOMElement $domElement, string $key, $value) {
+    protected function addDomElement(\DOMElement $domElement, $key, $value) {
         $child = $this->createDomElement($key, $value);
         $domElement->appendChild($child);
     }
@@ -381,7 +381,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      * @param object $value
      * @return \DOMNode
      */
-    protected function createDomNode(\DOMDocument $domDocument, string $name, $value) {
+    protected function createDomNode(\DOMDocument $domDocument, $name, $value) {
         $xmlValue = $this->objectToXml($value, $name);
         $domDoc = new \DOMDocument();
         $domDoc->loadXML($xmlValue);
@@ -400,7 +400,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
     protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
         $value = Iteration::typeFilter($value);
         if($propertyType->getActualType() === TypeEnum::ARRAY && !is_array($value) && !is_null($value)) {
-            $value = [$value];
+            $value = array($value);
         }
 
         return parent::mapPropertyByType($propertyType, $value);

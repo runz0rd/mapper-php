@@ -14,10 +14,10 @@ use Validator\IRule;
 class ObjectRule implements IRule {
 
     function getNames() {
-        return ['object', '\stdClass'];
+        return array('object', '\stdClass');
     }
 
-    function validate(ModelProperty $property, array $params = []) {
+    function validate(ModelProperty $property, array $params = array()) {
         Validation::validateObject($property->getPropertyValue());
     }
 }
