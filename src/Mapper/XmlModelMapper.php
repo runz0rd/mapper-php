@@ -399,7 +399,7 @@ class XmlModelMapper extends ModelMapper implements IModelMapper {
      */
     protected function mapPropertyByType(ModelPropertyType $propertyType, $value) {
         $value = Iteration::typeFilter($value);
-        if($propertyType->getActualType() === TypeEnum::ARRAY && !is_array($value) && !is_null($value)) {
+        if($propertyType->getActualType() === TypeEnum::ARR && !is_array($value) && !is_null($value)) {
             $value = array($value);
         }
 

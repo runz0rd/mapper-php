@@ -114,7 +114,7 @@ class ModelValidator {
 	 * @param string $requiredType
 	 */
 	protected function validateProperty(ModelProperty $property, string $requiredType) {
-		if($property->getDocBlock()->hasAnnotation(AnnotationEnum::VAR) && !is_null($property->getPropertyValue())) {
+		if($property->getDocBlock()->hasAnnotation(AnnotationEnum::VARIABLE) && !is_null($property->getPropertyValue())) {
 			$this->validateRule($property, $property->getType()->getActualType());
 		}
 		$this->validateRule($property, 'required', array($requiredType));

@@ -57,7 +57,10 @@ class ModelMapper implements IModelMapper {
         $mappedPropertyValue = $value;
 		if($propertyType->isModel()) {
             $modelClassName = $propertyType->getModelClassName();
-			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
+			if($propertyType->getActualType() === TypeEnum::ARR && (is_array($value) || is_object($value))) {
+				if(is_object($value) && count($value) === 1) {
+					$value = array($value);
+				}
 				$mappedPropertyValue = $this->mapModelArray($value, $modelClassName);
 			}
 			elseif($propertyType->getActualType() === TypeEnum::OBJECT && is_object($value)) {
@@ -72,15 +75,15 @@ class ModelMapper implements IModelMapper {
 
 	/**
 	 * @param string $modelClassName
-	 * @param array $source
+	 * @param array|object $source
 	 * @return array
 	 */
-	protected function mapModelArray(array $source, $modelClassName) {
-		$mappedModelArray = null;
-		foreach($source as $key => $value) {
+	protected function mapModelArray($source, $modelClassName) {
+		$mappedModelArray = array();
+		foreach($source as $value) {
 			if(is_object($value)) {
                 $model = ModelClass::instantiate($modelClassName);
-				$mappedModelArray[$key] = $this->mapModel($value, $model);
+				$mappedModelArray[] = $this->mapModel($value, $model);
 			}
 		}
 
@@ -128,7 +131,7 @@ class ModelMapper implements IModelMapper {
 		$unmappedPropertyValue = $value;
 
 		if($propertyType->isModel()) {
-			if($propertyType->getActualType() === TypeEnum::ARRAY && is_array($value)) {
+			if($propertyType->getActualType() === TypeEnum::ARR && is_array($value)) {
 				$unmappedPropertyValue = $this->unmapModelArray($value);
 			}
 
