@@ -37,7 +37,7 @@ trait MappableTrait {
 	 * @throws \InvalidArgumentException
 	 * @throws ModelMapperException
 	 */
-	public function mapFromJson(string $data) {
+	public function mapFromJson($data) {
 		$object = json_decode($data);
         if($object === null) {
             throw new \InvalidArgumentException('Invalid json supplied.');
@@ -57,7 +57,7 @@ trait MappableTrait {
     /**
      * @param string $xml
      */
-    public function mapFromXml(string $xml) {
+    public function mapFromXml($xml) {
         $mapper = new XmlModelMapper();
         $mapper->map($xml, $this);
     }

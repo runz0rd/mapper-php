@@ -15,7 +15,7 @@ trait ValidatableTrait {
 	/**
 	 * @param string $validationType
 	 */
-	public function validate(string $validationType = '') {
+	public function validate($validationType = '') {
 		$validator = new ModelValidator();
 		$validator->validate($this, $validationType);
 	}
