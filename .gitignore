@@ -2,3 +2,4 @@
 .idea
 tests/logs
 composer.lock
+.vscode
