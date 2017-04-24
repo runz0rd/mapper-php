@@ -127,5 +127,5 @@
     <alwaysRequiredBoolean>false</alwaysRequiredBoolean>
     <multipleRequiredInteger>5</multipleRequiredInteger>
     <xml xmlns:test="testns1" attributeTest="attribute">nodeValue</xml>
-    <xmlWithoutValue xmlns:test="testns2" attributeTest="attribute"/>
+    <xmlWithoutValue xmlns:test="testns2" attributeTest="attribute"></xmlWithoutValue>
 </testModel>

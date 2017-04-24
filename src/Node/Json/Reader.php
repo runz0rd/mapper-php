@@ -3,6 +3,7 @@
 namespace Node\Json;
 use Node\Element;
 use Node\IReader;
+use Node\Node;
 use Node\NodeList;
 
 class Reader implements IReader {
@@ -27,22 +28,21 @@ class Reader implements IReader {
      * @return Element
      */
     protected function parseJson($data, $name) {
-        $node = new Element($name);
         if(is_object($data)) {
+            $node = new Element($name);
             foreach ($data as $key => $value) {
-                $child = $this->parseJson($value, $key);
-                $node->addChild($child);
+                $node->addChild($this->parseJson($value, $key));
             }
         }
         elseif(is_array($data)) {
-            $children = array();
+            $nodes = [];
             foreach ($data as $key => $value) {
-                $children[] = $this->parseJson($value, $key);
+                $nodes[] = $this->parseJson($value, $name);
             }
-            $node->addChild(new NodeList($name, $children));
+            $node = new NodeList($name, $nodes);
         }
         else {
-            $node->setValue($data);
+            $node = new Node($name, $data);
         }
         return $node;
     }

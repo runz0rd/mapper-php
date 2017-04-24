@@ -10,6 +10,7 @@ namespace Node\Xml;
 use Node\Element;
 use Node\Node;
 use Node\IWriter;
+use Node\NodeList;
 
 class Writer implements IWriter {
 
@@ -39,18 +40,62 @@ class Writer implements IWriter {
      * @param Node $node
      */
     protected function writeNode($node) {
-        $this->writer->startElement($node->getName());
         if($node instanceof Element) {
-            foreach ($node->getAttributes() as $attribute) {
-                $this->writer->writeAttribute($attribute->getName(), $attribute->getValue());
-            }
-            foreach ($node->getAllChildren() as $child) {
-                $this->writeNode($child);
+            $this->writer->startElement($node->getName());
+            $this->writeAttributes($node);
+            $this->writeElement($node);
+            $this->writer->fullEndElement();
+        }
+        elseif($node instanceof NodeList) {
+            $this->writeNodeList($node);
+        }
+        else {
+            $this->writer->startElement($node->getName());
+            $this->writeAttributes($node);
+            $this->writer->text((string) $node->getValue());
+            $this->writer->fullEndElement();
+        }
+    }
+
+    /**
+     * @param Node $node
+     */
+    protected function writeAttributes($node) {
+        foreach ($node->getAttributes() as $attributeKey => $attributeValue) {
+            $this->writer->writeAttribute($attributeKey, $attributeValue);
+        }
+    }
+
+    /**
+     * @param Element $node
+     */
+    protected function writeElement($node) {
+        foreach ($node->getChildren() as $child) {
+            $this->writeNode($child);
+        }
+        if(empty($node->getChildren())) {
+            $stringValue = $this->toString($node->getValue());
+            $this->writer->text($stringValue);
+        }
+    }
+
+    /**
+     * @param NodeList $node
+     */
+    protected function writeNodeList($node) {
+        foreach ($node->getNodes() as $node) {
+            $this->writeNode($node);
+        }
+    }
+
+    protected function toString($value) {
+        $result = (string) $value;
+        if(is_bool($value)) {
+            $result = 'false';
+            if($value) {
+                $result = 'true';
             }
         }
-        if($node->getValue() != null) {
-            $this->writer->text($node->getValue());
-        }
-        $this->writer->endElement();
+        return $result;
     }
 }

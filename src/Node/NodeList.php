@@ -49,14 +49,13 @@ class NodeList extends Node {
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function toObject() {
-        //TODO revise naming
-        $array = array();
+    public function getValue() {
+        $value = array();
         foreach ($this->nodes as $node) {
-            $array[] = $node->toObject();
+            $value[] = $node->getValue();
         }
-        return $array;
+        return $value;
     }
 }

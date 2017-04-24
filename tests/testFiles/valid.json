@@ -1,0 +1,183 @@
+{
+  "boolTrue": true,
+  "boolFalse": false,
+  "string": "a",
+  "namedString123": "named",
+  "integer": 5,
+  "array": [
+    1,
+    "a",
+    3
+  ],
+  "stringArray": [
+    "a",
+    "b",
+    "c"
+  ],
+  "integerArray": [
+    3
+  ],
+  "booleanArray": [
+    true,
+    true,
+    false
+  ],
+  "objectArray": [
+    {
+      "a": 1
+    },
+    {
+      "a": 1
+    },
+    {
+      "a": 1
+    }
+  ],
+  "object": {
+    "a": 1
+  },
+  "model": {
+    "boolTrue": true,
+    "boolFalse": false,
+    "string": "a",
+    "namedString": "named",
+    "integer": 5,
+    "array": [
+      1,
+      "a",
+      3
+    ],
+    "stringArray": [
+      "a",
+      "b",
+      "c"
+    ],
+    "integerArray": [
+      3
+    ],
+    "booleanArray": [
+      true,
+      true,
+      false
+    ],
+    "objectArray": [
+      {
+        "a": 1
+      },
+      {
+        "a": 1
+      },
+      {
+        "a": 1
+      }
+    ],
+    "object": {
+      "a": 1
+    },
+    "requiredString": "requiredString",
+    "alwaysRequiredBoolean": false,
+    "multipleRequiredInteger": 5,
+    "attribute1": "attribute2"
+  },
+  "modelArray": [
+    {
+      "boolTrue": true,
+      "boolFalse": false,
+      "string": "a",
+      "namedString": "named",
+      "integer": 5,
+      "array": [
+        1,
+        "a",
+        3
+      ],
+      "stringArray": [
+        "a",
+        "b",
+        "c"
+      ],
+      "integerArray": [
+        3
+      ],
+      "booleanArray": [
+        true,
+        true,
+        false
+      ],
+      "objectArray": [
+        {
+          "a": 1
+        },
+        {
+          "a": 1
+        },
+        {
+          "a": 1
+        }
+      ],
+      "object": {
+        "a": 1
+      },
+      "requiredString": "requiredString",
+      "alwaysRequiredBoolean": false,
+      "multipleRequiredInteger": 5,
+      "attribute1": "attribute2"
+    },
+    {
+      "boolTrue": true,
+      "boolFalse": false,
+      "string": "a",
+      "namedString": "named",
+      "integer": 5,
+      "array": [
+        1,
+        "a",
+        3
+      ],
+      "stringArray": [
+        "a",
+        "b",
+        "c"
+      ],
+      "integerArray": [
+        3
+      ],
+      "booleanArray": [
+        true,
+        true,
+        false
+      ],
+      "objectArray": [
+        {
+          "a": 1
+        },
+        {
+          "a": 1
+        },
+        {
+          "a": 1
+        }
+      ],
+      "object": {
+        "a": 1
+      },
+      "requiredString": "requiredString",
+      "alwaysRequiredBoolean": false,
+      "multipleRequiredInteger": 5,
+      "attribute1": "attribute3"
+    }
+  ],
+  "requiredString": "requiredString",
+  "alwaysRequiredBoolean": false,
+  "multipleRequiredInteger": 5,
+  "attribute1": "attribute1",
+  "xml": {
+    "xmlns:test": "testns1",
+    "attributeTest": "attribute",
+    "value": "nodeValue"
+  },
+  "xmlWithoutValue": {
+    "xmlns:test": "testns2",
+    "attributeTest": "attribute"
+  }
+}

@@ -7,6 +7,7 @@
  */
 
 namespace Node\Json;
+use Node\Element;
 use Node\IWriter;
 use Node\Node;
 
@@ -18,7 +19,7 @@ class Writer implements IWriter {
      * @throws \Exception
      */
     public function write($node) {
-        $json = json_encode($node->toObject());
+        $json = json_encode($node->getValue());
         if($json === false) {
             throw new \Exception('Cannot create json for given input');
         }

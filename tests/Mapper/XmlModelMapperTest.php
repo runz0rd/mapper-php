@@ -78,7 +78,7 @@ class XmlModelMapperTest extends PHPUnit_Framework_TestCase {
         $model->xmlWithoutValue->attributeTest = 'attribute';
         $model->xmlWithoutValue->ns = 'testns2';
 
-        $xml = Xml::loadFromFile(__DIR__ . '/xml/valid_testModel.xml');
+        $xml = Xml::loadFromFile(__DIR__ . '/../testFiles/valid.xml');
 
         return array(
             array($model, $xml)

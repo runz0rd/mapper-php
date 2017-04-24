@@ -110,9 +110,9 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
         $model->xmlWithoutValue->attributeTest = 'attribute';
         $model->xmlWithoutValue->ns = 'testns2';
 
-        $xml = \Common\Util\Xml::loadFromFile(__DIR__ . '/../Mapper/xml/valid_testModel.xml');
-        $reader = new \Node\Xml\Reader($xml);
-        $source = $reader->read();
+        $xml = \Common\Util\Xml::loadFromFile(__DIR__ . '/../testFiles/valid.xml');
+        $reader = new \Node\Xml\Reader();
+        $source = $reader->read($xml);
 
         return array(
             array($source, $model)

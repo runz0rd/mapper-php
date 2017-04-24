@@ -3,6 +3,8 @@
 namespace Node\Xml;
 use Node\Element;
 use Node\IReader;
+use Node\Node;
+use Node\NodeList;
 
 class Reader implements IReader {
 
@@ -48,12 +50,33 @@ class Reader implements IReader {
                 break;
             }
             if($this->reader->nodeType == \XMLReader::ELEMENT) {
-                $node->addChild($this->parseNode());
+                $this->addChild($node, $this->parseNode());
             }
             if($this->reader->nodeType == \XMLReader::TEXT) {
                 $node->setValue($this->reader->value);
             }
         }
         return $node;
+    }
+
+    /**
+     * @param Element $parent
+     * @param Node $newChild
+     */
+    protected function addChild($parent, $newChild) {
+        $childName = $newChild->getName();
+        if($parent->hasChild($childName)) {
+            $child = $parent->getChild($childName);
+            if($child instanceof NodeList) {
+                $child->addNode($newChild);
+            }
+            else {
+                $parent->removeChild($childName);
+                $parent->addChild(new NodeList($childName, [$child, $newChild]));
+            }
+        }
+        else {
+            $parent->addChild($newChild);
+        }
     }
 }
