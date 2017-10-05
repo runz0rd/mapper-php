@@ -7,14 +7,14 @@
  */
 
 namespace Node\Json;
-use Node\Element;
+use Node\ElementNode;
 use Node\IWriter;
-use Node\Node;
+use Node\TextNode;
 
 class Writer implements IWriter {
 
     /**
-     * @param Node $node
+     * @param TextNode $node
      * @return string
      * @throws \Exception
      */

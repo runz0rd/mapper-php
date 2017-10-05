@@ -7,8 +7,8 @@
  */
 
 namespace Node\Xml;
-use Node\Element;
-use Node\Node;
+use Node\ElementNode;
+use Node\TextNode;
 use Node\IWriter;
 use Node\NodeList;
 
@@ -37,10 +37,10 @@ class Writer implements IWriter {
     }
 
     /**
-     * @param Node $node
+     * @param TextNode $node
      */
     protected function writeNode($node) {
-        if($node instanceof Element) {
+        if($node instanceof ElementNode) {
             $this->writer->startElement($node->getName());
             $this->writeAttributes($node);
             $this->writeElement($node);
@@ -58,7 +58,7 @@ class Writer implements IWriter {
     }
 
     /**
-     * @param Node $node
+     * @param TextNode $node
      */
     protected function writeAttributes($node) {
         foreach ($node->getAttributes() as $attributeKey => $attributeValue) {
@@ -67,7 +67,7 @@ class Writer implements IWriter {
     }
 
     /**
-     * @param Element $node
+     * @param ElementNode $node
      */
     protected function writeElement($node) {
         foreach ($node->getChildren() as $child) {

@@ -12,7 +12,7 @@ namespace Node;
 interface IWriter {
 
     /**
-     * @param Element $node
+     * @param ElementNode $node
      * @return mixed
      */
     function write($node);

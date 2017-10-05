@@ -1,9 +1,9 @@
 <?php
 
 namespace Node\Xml;
-use Node\Element;
+use Node\ElementNode;
 use Node\IReader;
-use Node\Node;
+use Node\TextNode;
 use Node\NodeList;
 
 class Reader implements IReader {
@@ -16,7 +16,7 @@ class Reader implements IReader {
 
     /**
      * @param string $data
-     * @return Element
+     * @return ElementNode
      * @throws \Exception
      */
     public function read($data) {
@@ -35,10 +35,10 @@ class Reader implements IReader {
     }
 
     /**
-     * @return Element
+     * @return ElementNode
      */
     protected function parseNode() {
-        $node = new Element($this->reader->name);
+        $node = new ElementNode($this->reader->name);
         if($this->reader->moveToFirstAttribute()) {
             $node->addAttribute($this->reader->name, $this->reader->value);
             while($this->reader->moveToNextAttribute()) {
@@ -60,8 +60,8 @@ class Reader implements IReader {
     }
 
     /**
-     * @param Element $parent
-     * @param Node $newChild
+     * @param ElementNode $parent
+     * @param TextNode $newChild
      */
     protected function addChild($parent, $newChild) {
         $childName = $newChild->getName();

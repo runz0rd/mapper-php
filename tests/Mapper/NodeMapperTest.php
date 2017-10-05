@@ -6,49 +6,48 @@
  * Date: 6/1/2016
  * Time: 11:23 PM
  */
-use Mapper\ModelMapper;
 
 class NodeMapperTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var \Mapper\NodeMapper
 	 */
-	public $modelMapper;
+	public $nodeMapper;
 
 	public function setUp() {
-		$this->modelMapper = new \Mapper\NodeMapper();
+		$this->nodeMapper = new \Mapper\NodeMapper();
 		parent::setUp();
 	}
 
     /**
-     * @param $source
+     * @param $node
      * @param $expectedModel
-     * @dataProvider validMapValues
+     * @dataProvider validValues
      */
-	public function testMap($source, $expectedModel) {
-        $actualModel = $this->modelMapper->map($source, new TestModel());
+	public function testMap($node, $expectedModel) {
+        $actualModel = $this->nodeMapper->map($node, new TestModel());
         $this->assertEquals($expectedModel, $actualModel);
 	}
 
     /**
-     * @param $source
+     * @param $node
      * @param $model
      * @dataProvider invalidMapValues
      * @expectedException \Exception
      */
-    public function testMapFail($source, $model) {
-        $this->modelMapper->map($source, $model);
+    public function testMapFail($node, $model) {
+        $this->nodeMapper->map($node, $model);
     }
 
-    /**
-     * @param $expectedObject
-     * @param $model
-     * @dataProvider validUnmapValues
-     */
-    public function testUnmap($model, $expectedObject) {
-        $actualObject = $this->modelMapper->unmap($model);
-        $this->assertEquals($expectedObject, $actualObject);
-    }
+//    /**
+//     * @param $expectedObject
+//     * @param $model
+//     * @dataProvider validValues
+//     */
+//    public function testUnmap($model, $expectedNode) {
+//        $actualNode = $this->nodeMapper->unmap($model);
+//        $this->assertEquals($expectedNode, $actualNode);
+//    }
 
     /**
      * @param $model
@@ -56,7 +55,7 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
      * @expectedException \Exception
      */
     public function testUnmapFail($model) {
-        $this->modelMapper->unmap($model);
+        $this->nodeMapper->unmap($model);
     }
 
     public function invalidMapValues() {
@@ -68,12 +67,12 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
             array(array(), new TestModel()),
             array(new stdClass(), new TestModel()),
             array(new TestModel(), 1),
-            array(new TestModel(), new DateTime()),
+            array(new \Node\TextNode('asd'), new DateTime()),
             array(new TestModel(), new stdClass())
         );
     }
 
-    public function validMapValues() {
+    public function validValues() {
         $object = new stdClass();
         $object->a = 1;
 
@@ -102,20 +101,27 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
         $nestedModel2->attribute1 = 'attribute3';
         $model->model = $nestedModel1;
         $model->modelArray = array($nestedModel1,$nestedModel2);
-        $model->xml = new XmlTestModel();
-        $model->xml->ns = 'testns1';
-        $model->xml->attributeTest = 'attribute';
-        $model->xml->value = 'nodeValue';
-        $model->xmlWithoutValue = new XmlTestModel();
-        $model->xmlWithoutValue->attributeTest = 'attribute';
-        $model->xmlWithoutValue->ns = 'testns2';
+
+        $xmlModel = clone $model;
+        $xmlModel->xml = new XmlTestModel();
+        $xmlModel->xml->ns = 'testns1';
+        $xmlModel->xml->attributeTest = 'attribute';
+        $xmlModel->xml->value = 'nodeValue';
+        $xmlModel->xmlWithoutValue = new XmlTestModel();
+        $xmlModel->xmlWithoutValue->attributeTest = 'attribute';
+        $xmlModel->xmlWithoutValue->ns = 'testns2';
 
         $xml = \Common\Util\Xml::loadFromFile(__DIR__ . '/../testFiles/valid.xml');
-        $reader = new \Node\Xml\Reader();
-        $source = $reader->read($xml);
+        $xmlReader = new \Node\Xml\Reader();
+        $xmlNode = $xmlReader->read($xml);
+
+        $json = \Common\Util\File::read(__DIR__ . '/../testFiles/valid.json');
+        $jsonReader = new \Node\Json\Reader();
+        $jsonNode = $jsonReader->read($json);
 
         return array(
-            array($source, $model)
+            array($xmlNode, $xmlModel),
+            array($jsonNode, $model)
         );
     }
 
@@ -132,9 +138,11 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function validUnmapValues() {
-        $nestedJson = '{"boolTrue":true,"boolFalse":false,"string":"a","namedString":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"alwaysRequiredBoolean":true}';
-        $json = '{"boolTrue":true,"boolFalse":false,"string":"a","namedString123":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"model":'.$nestedJson.',"modelArray":['.$nestedJson.', '.$nestedJson.'],"alwaysRequiredBoolean":true}';
+        // $nestedJson = '{"boolTrue":true,"boolFalse":false,"string":"a","namedString":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"alwaysRequiredBoolean":true}';
+        // $json = '{"boolTrue":true,"boolFalse":false,"string":"a","namedString123":"named","integer":5,"array":[1,"a",3],"stringArray":["a","b","c"],"integerArray":[3],"booleanArray":[true,true,false],"objectArray":[{"a":1},{"a":1},{"a":1}],"object":{"a":1},"model":'.$nestedJson.',"modelArray":['.$nestedJson.', '.$nestedJson.'],"alwaysRequiredBoolean":true}';
+        $json = \Common\Util\File::read(__DIR__ . '/../testFiles/valid.json');
         $unmappedObject = json_decode($json);
+        echo $json;
 
         $object = new stdClass();
         $object->a = 1;

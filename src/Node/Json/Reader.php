@@ -1,16 +1,16 @@
 <?php
 
 namespace Node\Json;
-use Node\Element;
+use Node\ElementNode;
 use Node\IReader;
-use Node\Node;
+use Node\TextNode;
 use Node\NodeList;
 
 class Reader implements IReader {
 
     /**
      * @param string $data
-     * @return Element
+     * @return ElementNode
      * @throws \Exception
      */
     public function read($data) {
@@ -25,11 +25,11 @@ class Reader implements IReader {
     /**
      * @param mixed $data
      * @param string $name
-     * @return Element
+     * @return ElementNode
      */
     protected function parseJson($data, $name) {
         if(is_object($data)) {
-            $node = new Element($name);
+            $node = new ElementNode($name);
             foreach ($data as $key => $value) {
                 $node->addChild($this->parseJson($value, $key));
             }
@@ -42,7 +42,7 @@ class Reader implements IReader {
             $node = new NodeList($name, $nodes);
         }
         else {
-            $node = new Node($name, $data);
+            $node = new TextNode($name, $data);
         }
         return $node;
     }

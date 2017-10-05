@@ -170,14 +170,5 @@
   "requiredString": "requiredString",
   "alwaysRequiredBoolean": false,
   "multipleRequiredInteger": 5,
-  "attribute1": "attribute1",
-  "xml": {
-    "xmlns:test": "testns1",
-    "attributeTest": "attribute",
-    "value": "nodeValue"
-  },
-  "xmlWithoutValue": {
-    "xmlns:test": "testns2",
-    "attributeTest": "attribute"
-  }
+  "attribute1": "attribute1"
 }

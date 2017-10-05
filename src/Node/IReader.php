@@ -13,7 +13,7 @@ interface IReader {
 
     /**
      * @param mixed $data
-     * @return Node
+     * @return TextNode
      */
     function read($data);
 

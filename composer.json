@@ -15,7 +15,9 @@
         "issues": "https://github.com/runz0rd/mapper-php/issues"
     },
     "require": {
-        "runz0rd/common-php": "2.2.*"
+        "runz0rd/common-php": "2.2.*",
+        "doctrine/annotations": "1.4.*",
+        "doctrine/cache": "1.6.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~5"

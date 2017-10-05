@@ -9,7 +9,7 @@
 
 namespace Node;
 
-class Element extends Node {
+class ElementNode extends TextNode {
 
     /**
      * @var Node[]
@@ -17,22 +17,17 @@ class Element extends Node {
     protected $children = array();
 
     /**
-     * @param string $name
-     * @return boolean
-     */
-    public function hasChild($name) {
-        return $this->hasNode($this->children, $name);
-    }
-
-    /**
      * @param $name
      * @return Node
      * @throws \Exception
      */
     public function getChild($name) {
-        $node = $this->getNode($this->children, $name);
-        if($node == null) {
-            throw new \Exception('No child named ' . $name . ' found');
+        $node = null;
+        foreach($this->children as $child) {
+            if($child->name == $name && !$child instanceof Node) {
+                $node = $child;
+                break;
+            }
         }
         return $node;
     }
@@ -43,7 +38,7 @@ class Element extends Node {
      */
     public function addChild($newChild) {
         $childName = $newChild->getName();
-        if($this->hasChild($childName)) {
+        if($this->getChild($childName) != null) {
             throw new \Exception('Child with name "' . $childName . '" already exists."');
         }
         $this->children[] = $newChild;

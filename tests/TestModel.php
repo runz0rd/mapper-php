@@ -6,7 +6,7 @@
  * Date: 7/31/2016
  * Time: 9:49 AM
  */
-use Traits\MappableTrait;
+use Traits\MappableTrait as MappableTrait;
 use Traits\ConvertibleTrait;
 use Traits\ValidatableTrait;
 
@@ -41,6 +41,9 @@ class TestModel {
     public $string;
 
     /**
+     * @Annotation\Type("\TestModel[]")
+     * @Annotation\Name("asdf")
+     * @Annotation\Required
      * @name namedString123
      * @var string
      */
