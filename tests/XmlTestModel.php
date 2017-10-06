@@ -16,17 +16,21 @@ class XmlTestModel {
     use ValidatableTrait;
 
     /**
+     * @Annotation\Name("xmlns:test")
+     * @Annotation\Xml("attribute")
      * @name xmlns:test
      * @xmlAttribute
      */
     public $ns;
 
     /**
+     * @Annotation\Xml("attribute")
      * @xmlAttribute
      */
     public $attributeTest;
 
     /**
+     * @Annotation\Xml("value")
      * @xmlNodeValue
      */
     public $value;

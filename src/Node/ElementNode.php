@@ -24,7 +24,7 @@ class ElementNode extends TextNode {
     public function getChild($name) {
         $node = null;
         foreach($this->children as $child) {
-            if($child->name == $name && !$child instanceof Node) {
+            if($child->name == $name) {
                 $node = $child;
                 break;
             }

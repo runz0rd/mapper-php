@@ -17,6 +17,13 @@ class TextNode extends Node {
     protected $attributes = array();
 
     /**
+     * @return Node[]
+     */
+    public function getAttributes() {
+        return $this->attributes;
+    }
+
+    /**
      * @param string $name
      * @return Node|null
      */

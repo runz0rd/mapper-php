@@ -38,6 +38,11 @@ class ModelReflection {
         $this->classInstance = $instance;
         $this->reflectionClass = new \ReflectionClass($instance);
         $this->annotationReader = new AnnotationReader();
+        $this->annotationReader::addGlobalIgnoredName('required');
+        $this->annotationReader::addGlobalIgnoredName('rule');
+        $this->annotationReader::addGlobalIgnoredName('name');
+        $this->annotationReader::addGlobalIgnoredName('xmlAttribute');
+        $this->annotationReader::addGlobalIgnoredName('xmlNodeValue');
         $this->annotationReader::addGlobalIgnoredName('var');
     }
 
@@ -63,7 +68,7 @@ class ModelReflection {
      * @param mixed $value
      */
     public function setProperty($name, $value) {
-        $this->getReflectionProperty($name)->setValue($value);
+        $this->getReflectionProperty($name)->setValue($this->classInstance, $value);
     }
 
     /**
@@ -118,4 +123,34 @@ class ModelReflection {
         return $aliases[strtolower($name)];
     }
 
+    /**
+     * @param string $name
+     * @return string
+     * @throws \Exception
+     */
+    public function getFullClassName($name) {
+        $className = $name;
+        if(!class_exists($name)) {
+            $className = $this->getUseStatement($name);
+        }
+        if(!class_exists($className)) {
+            throw new \Exception('Class ' . $className . ' does not exist.');
+        }
+        return $className;
+    }
+
+    /**
+     * @param string $name
+     * @return object
+     */
+    public static function instantiate($name) {
+        try {
+            $reflectionClass = new \ReflectionClass($name);
+            $model = $reflectionClass->newInstanceWithoutConstructor();
+        }
+        catch(\Exception $ex) {
+            throw new \InvalidArgumentException('Could not instantiate model ' . $name . '. ' . $ex->getMessage());
+        }
+        return $model;
+    }
 }

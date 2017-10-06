@@ -26,16 +26,19 @@ class NestedTestModel {
     public $noType;
 
     /**
+     * @Annotation\Type("boolean")
      * @var boolean
      */
     public $boolTrue;
 
     /**
+     * @Annotation\Type("bool")
      * @var boolean
      */
     public $boolFalse;
 
     /**
+     * @Annotation\Type("string")
      * @var string
      */
     public $string;
@@ -46,41 +49,51 @@ class NestedTestModel {
     public $namedString;
 
     /**
+     * testing the multiline comments
+     * right here
+     * @Annotation\Type("integer")
      * @var integer
      */
     public $integer;
 
     /**
+     * @Annotation\Type("array")
      * @var array
      */
     public $array;
 
     /**
+     * @Annotation\Type("array")
      * @var string[]
      */
     public $stringArray;
 
     /**
+     * @Annotation\Type("array")
      * @var integer[]
      */
     public $integerArray;
 
     /**
+     * @Annotation\Type("array")
      * @var boolean[]
      */
     public $booleanArray;
 
     /**
+     * @Annotation\Type("array")
      * @var object[]
      */
     public $objectArray;
 
     /**
+     * @Annotation\Type("object")
      * @var object
      */
     public $object;
 
     /**
+     * @Annotation\Type("string")
      * @required requiredString
      * @required testRequired
      * @var string
@@ -88,12 +101,14 @@ class NestedTestModel {
     public $requiredString;
 
     /**
+     * @Annotation\Type("boolean")
      * @required
      * @var boolean
      */
     public $alwaysRequiredBoolean;
 
     /**
+     * @Annotation\Type("int")
      * @required requiredInteger
      * @required testRequired
      * @var integer
@@ -101,19 +116,9 @@ class NestedTestModel {
     public $multipleRequiredInteger;
 
     /**
-     * @xmlAttribute
+     * @Annotation\Type("string")
+     * @Annotation\Xml("attribute")
      * @var string
      */
     public $attribute1;
-
-    /**
-     * @rule email
-     */
-    public $emailRule;
-
-    /**
-     * @rule string
-     * @rule email
-     */
-    public $multipleRules;
 }

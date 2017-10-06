@@ -7,7 +7,6 @@
  */
 
 namespace Node\Json;
-use Node\ElementNode;
 use Node\IWriter;
 use Node\TextNode;
 

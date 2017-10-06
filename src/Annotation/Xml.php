@@ -29,6 +29,7 @@ class Xml
         switch ($values['value']) {
             case self::TYPE_ATTRIBUTE:
             case self::TYPE_VALUE:
+                $this->type = $values['value'];
                 break;
             default:
                 throw new \Exception('You must specify a valid (attribute or value) xml property type.');

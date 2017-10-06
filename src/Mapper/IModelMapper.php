@@ -16,11 +16,11 @@ interface IModelMapper {
 	 * @param object $model
 	 * @return object
 	 */
-	public function map($source, $model);
+	function map($source, $model);
 
 	/**
 	 * @param object $model
 	 * @return mixed
 	 */
-	public function unmap($model);
+	function unmap($model);
 }

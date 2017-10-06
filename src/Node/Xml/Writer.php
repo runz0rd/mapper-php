@@ -61,8 +61,8 @@ class Writer implements IWriter {
      * @param TextNode $node
      */
     protected function writeAttributes($node) {
-        foreach ($node->getAttributes() as $attributeKey => $attributeValue) {
-            $this->writer->writeAttribute($attributeKey, $attributeValue);
+        foreach ($node->getAttributes() as $attribute) {
+            $this->writer->writeAttribute($attribute->getName(), $attribute->getValue());
         }
     }
 

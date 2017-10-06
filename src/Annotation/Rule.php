@@ -19,10 +19,18 @@ class Rule
      */
     public $name;
 
+    /**
+     * @var array
+     */
+    public $params;
+
     public function __construct($values) {
         if(empty($values) || !isset($values['value'])) {
             throw new \Exception('You must specify a rule name.');
         }
         $this->name = $values['value'];
+        if(isset($values['params'])) {
+            $this->params = explode(',', $values['params']);
+        }
     }
 }

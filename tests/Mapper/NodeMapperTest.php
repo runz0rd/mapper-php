@@ -49,14 +49,14 @@ class NodeMapperTest extends \PHPUnit_Framework_TestCase {
 //        $this->assertEquals($expectedNode, $actualNode);
 //    }
 
-    /**
-     * @param $model
-     * @dataProvider invalidUnmapValues
-     * @expectedException \Exception
-     */
-    public function testUnmapFail($model) {
-        $this->nodeMapper->unmap($model);
-    }
+//    /**
+//     * @param $model
+//     * @dataProvider invalidUnmapValues
+//     * @expectedException \Exception
+//     */
+//    public function testUnmapFail($model) {
+//        $this->nodeMapper->unmap($model);
+//    }
 
     public function invalidMapValues() {
         return array(

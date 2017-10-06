@@ -14,6 +14,16 @@ namespace Annotation;
  */
 class Type
 {
+
+    const INT = 'int';
+    const INTEGER = 'integer';
+    const STRING = 'string';
+    const BOOL = 'bool';
+    const BOOLEAN = 'boolean';
+    const DOUBLE = 'double';
+    const OBJECT = 'object';
+    const ARRAY = 'array';
+
     /**
      * @var string
      */
@@ -34,14 +44,14 @@ class Type
             throw new \Exception('You must specify a type.');
         }
         switch ($values['value']) {
-            case 'int':
-            case 'integer':
-            case 'string':
-            case 'bool':
-            case 'boolean':
-            case 'double':
-            case 'object':
-            case 'array':
+            case self::INT:
+            case self::INTEGER:
+            case self::STRING:
+            case self::BOOL:
+            case self::BOOLEAN:
+            case self::DOUBLE:
+            case self::OBJECT:
+            case self::ARRAY:
                 $this->annotatedType = $values['value'];
                 $this->type = $values['value'];
                 break;

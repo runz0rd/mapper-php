@@ -65,7 +65,8 @@ class Reader implements IReader {
      */
     protected function addChild($parent, $newChild) {
         $childName = $newChild->getName();
-        if($parent->hasChild($childName)) {
+        $child = $parent->getChild($childName);
+        if($child != null) {
             $child = $parent->getChild($childName);
             if($child instanceof NodeList) {
                 $child->addNode($newChild);
