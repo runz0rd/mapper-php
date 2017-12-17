@@ -27,6 +27,7 @@
             "src/"
         ]
     },
+
     "autoload-dev": {
         "classmap": [
             "tests/"
