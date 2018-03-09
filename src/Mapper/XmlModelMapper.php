@@ -239,10 +239,13 @@ class XmlModelMapper extends ModelMapper implements IModelMapper
             $this->getAnnotation($modelClass, XmlAnnotationEnum::XML_ENCODING, 'utf-8'),
             $this->getAnnotation($modelClass, XmlAnnotationEnum::XML_NAMESPACES, null,
                 function ($value) {
-                    if (preg_match_all('/(([a-z]+)\=|)\"(.*?)\"/', $value, $m)) {
-                        return array_combine(array_map(function ($a) {
-                            return 'xmlns' . ((!empty($a)) ? ':' . $a : '');
-                        }, $m[2]), $m[3]);
+                    if (preg_match_all('/(([a-z]+:|)([a-zA-z]+)\=|)\"(.*?)\"/', $value, $m)) {
+                        return array_combine(
+                            array_map(function ($name, $prefix) {
+                                return (!empty($prefix) ? rtrim($prefix, ':') : 'xmlns')
+                                    . (!empty($name) ? ':' . rtrim($name, ':') : '');
+                            }, $m[3], $m[2])
+                            , $m[4]);
                     }
                 }
 
@@ -252,8 +255,12 @@ class XmlModelMapper extends ModelMapper implements IModelMapper
         return $this->objectToXml($source, $document);
     }
 
-    private function getAnnotation(ModelClass $classInfo, $xmlAnnotationName, $default = null, $annotationHandler = null)
-    {
+    private function getAnnotation(
+        ModelClass $classInfo,
+        $xmlAnnotationName,
+        $default = null,
+        $annotationHandler = null
+    ) {
         $value = $default;
         if ($classInfo->getDocBlock()->hasAnnotation($xmlAnnotationName) &&
             !Validation::isEmpty($classInfo->getDocBlock()->getAnnotation($xmlAnnotationName))) {
@@ -319,8 +326,13 @@ class XmlModelMapper extends ModelMapper implements IModelMapper
 
         if (isset($namespaces)) {
             foreach ($namespaces as $qualifiedName => $namespaceURI) {
-                $domElement->setAttributeNS('http://www.w3.org/2000/xmlns/',
-                    $qualifiedName, $namespaceURI);
+                try {
+                    $domElement->setAttributeNS('http://www.w3.org/2000/xmlns/',
+                        $qualifiedName, $namespaceURI);
+                } catch (\DOMException $e) {
+                    $domElement->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance',
+                        $qualifiedName, $namespaceURI);
+                }
             }
         }
         $domDocument->appendChild($domElement);
