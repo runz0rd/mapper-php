@@ -81,6 +81,9 @@ Heres a list of annotations we can use in models:
 | @required     |  property   | Used to declare that a property is required for a specific action (validation). Use without the action to make the property always required |
 | @rule         |  property   | Used to enforce specific rules and filters on the property value (validation). You can use the predefined rules or create and import your own |
 | @xmlRoot      |  class      | Used to name the xml root name of the element (only for xml mapping) |
+| @xmlVersion   |  class      | Version of xml document (only for xml mapping) |    
+| @xmlEncoding  |  class      | Encoding document. Default utf-8. (only for xml mapping) |
+| @xmlNamespaces|  class      | Document namespaces. Without prefix xmlns. Example : "http://www.sitemaps.org/schemas/sitemap/0.9" xhtml="http://www.w3.org/1999/xhtml". (only for xml mapping) |  
 | @xmlAttribute |  property   | Used to declare that a property is a xml attribute for the element. Also used for namespaces (only for xml mapping) |
 | @xmlNodeValue |  property   | Used to declare that a property contains the text node value (only for xml mapping). Please see the models in tests/ (XmlTestModel) |
 
